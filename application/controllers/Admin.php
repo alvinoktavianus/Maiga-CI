@@ -3,7 +3,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
 
-	public function index()
+	public function register()
+	{
+		
+	}
+
+	public function do_register()
+	{
+		
+	}
+
+	public function uploadpayroll()
+	{
+		
+	}
+
+	public function do_uploadpayroll()
+	{
+		
+	}
+
+	public function downloadassignment()
+	{
+		
+	}
+
+	public function employeelist()
 	{
 		
 	}
