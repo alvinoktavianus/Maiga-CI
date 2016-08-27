@@ -3,7 +3,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Employee extends CI_Controller {
 
-	public function index()
+	public function profile()
+	{
+		
+	}
+
+	public function uploadassignment()
+	{
+		
+	}
+
+	public function downloadpayroll()
+	{
+		
+	}
+
+	public function do_uploadassignment()
+	{
+		
+	}
+
+	public function updateprofile()
+	{
+		
+	}
+
+	public function do_updateprofile()
 	{
 		
 	}
