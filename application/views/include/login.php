@@ -17,12 +17,12 @@
 <body>
 
 <div class="container">
+    <?php echo form_open(base_url().'users/do_login', array( 'class' => 'form-signin' )); ?>
     <?php if ($this->session->flashdata('errors')): ?>
         <div class="alert alert-danger" role="alert">
             <strong><?php echo $this->session->flashdata('errors'); ?></strong>
         </div>
     <?php endif; ?>
-    <?php echo form_open(base_url().'users/do_login', array( 'class' => 'form-signin' )); ?>
     <h2 class="form-signin-heading">Please sign in</h2>
     <?php echo form_label('Email Address', 'inputEmail', array( 'class' => 'sr-only' )); ?>
     <?php echo form_input(array( 'id' => 'inputEmail', 'name' => 'inputEmail', 'type' => 'email', 'class' => 'form-control', 'required' => true, 'autofocus' => 'true', 'maxlength' => 50, 'placeholder' => 'Email address' )); ?>
