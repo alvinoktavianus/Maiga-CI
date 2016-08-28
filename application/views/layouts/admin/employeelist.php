@@ -27,7 +27,7 @@
     		<td><?php echo $employee->status; ?></td>
     		<td><a href="<?php echo base_url(); ?>admin/updateemployee?email=<?php echo $employee->email; ?>">Update Employee</a></td>
     		<td>
-    			<?php echo form_open(base_url().'admin/removeemployee?email=<?php echo $employee->email; ?>'); ?>
+    			<?php echo form_open(base_url().'admin/removeemployee?email='.$employee->email); ?>
 				<?php echo form_submit('remove', 'Remove', array( 'class' => 'btn btn-danger btn-xs' )); ?>
     			<?php echo form_close(); ?>
     		</td>

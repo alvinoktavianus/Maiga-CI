@@ -169,6 +169,18 @@ class Admin extends CI_Controller {
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
 
+			$data['status'] = "Tidak Aktif";
+
+			$this->db->trans_begin();
+
+			$this->load->model('admin_model');
+			$this->admin_model->remove_employee($this->input->get('email'), $data);
+
+			$this->db->trans_commit();
+
+			$this->session->set_flashdata('success', "Successfully remove ".$this->input->get('email').'.');
+			redirect('/admin/employeelist', 'refresh');
+
 		} else {
 
 		}
