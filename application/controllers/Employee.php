@@ -19,8 +19,10 @@ class Employee extends CI_Controller {
 	public function uploadassignment()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
+			$this->load->model('employee_model');
 			$data['page_title'] = "Upload Assignment | Maiga";
 			$data['page'] = "uploadassignmentview";
+			$data['assignments'] = $this->employee_model->get_all_assignment($this->session->userdata('user_session')['email']);
 			$this->load->view('include/masterlogin', $data);
 		} else {
 			redirect('/','refresh');
