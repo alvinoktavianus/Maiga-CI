@@ -78,7 +78,7 @@ class Admin extends CI_Controller {
 			redirect('/admin/register','refresh');
 
 		} else {
-
+			redirect('/','refresh');
 		}
 	}
 
@@ -122,7 +122,7 @@ class Admin extends CI_Controller {
 			$data['page'] = "employeelistview";
 			$this->load->view('include/masterlogin', $data);
 		} else {
-
+			redirect('/','refresh');
 		}
 	}
 
@@ -135,7 +135,7 @@ class Admin extends CI_Controller {
 			$data['page_title'] = "Update Employee | Maiga";
 			$this->load->view('include/masterlogin', $data);
 		} else {
-
+			redirect('/','refresh');
 		}
 	}
 
@@ -143,8 +143,25 @@ class Admin extends CI_Controller {
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' && $this->input->get('email') != null ) {
 
-		} else {
+			if ( $this->input->post('endwork') != null ) {
+				$data['selesaibekerja'] = $this->input->post('endwork');
+				$data['status'] = "Tidak Aktif";
+			}
+			$data['jabatan'] = $this->input->post('position');
+			$data['department'] = $this->input->post('department');
 
+			$this->db->trans_begin();
+
+			$this->load->model('admin_model');
+			$this->admin_model->update_employee($this->input->get('email'), $data);
+
+			$this->db->trans_commit();
+
+			$this->session->set_flashdata('success', "Successfully update ".$this->input->get('email').'.');
+			redirect('/admin/employeelist', 'refresh');
+
+		} else {
+			redirect('/','refresh');
 		}
 	}
 

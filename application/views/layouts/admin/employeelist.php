@@ -2,6 +2,11 @@
 
 <h2 class="text-center">Daftar Karyawan</h2>
 <br>
+<?php if ($this->session->flashdata('success')): ?>
+    <div class="alert alert-success" role="alert">
+        <strong><?php echo $this->session->flashdata('success'); ?></strong>
+    </div>
+<?php endif; ?>
 <table class="table table-bordered table-striped">
     <thead>
     <tr>

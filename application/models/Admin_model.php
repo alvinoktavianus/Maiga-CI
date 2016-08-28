@@ -15,6 +15,12 @@ class Admin_model extends CI_Model {
         $this->db->insert('employees', $data);
     }
 
+    public function update_employee($email, $data)
+    {
+        $this->db->where('email', $email);
+        $this->db->update('employees', $data);
+    }
+
 }
 
 /* End of file Admin_model.php */
