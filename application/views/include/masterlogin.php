@@ -47,7 +47,36 @@
 </nav>
 
 <div class="container">
-    
+    <?php
+        if ($this->session->userdata('user_session')['isloggedin']) {
+            switch ($this->session->userdata('user_session')['role']) {
+
+                case 'adm':
+                    switch ($page) {
+                        case 'homeview':
+                            $this->load->view('layouts/admin/home');
+                            break;
+                        case 'registerview':
+                            $this->load->view('layouts/admin/register');
+                            break;
+                        case 'employeelistview':
+                            $this->load->view('layouts/admin/employeelist');
+                            break;
+                        case 'downloadassignmentview':
+                            $this->load->view('layouts/admin/downloadassignment');
+                            break;
+                        case 'uploadpayrollview':
+                            $this->load->view('layouts/admin/uploadpayroll');
+                            break;
+                    }
+                    break;
+                case 'emp':
+                    # code...
+                    break;
+
+            }
+        }
+    ?>
 </div>
 
 <script src="<?php echo base_url(); ?>assets/js/vendor.js"></script>
