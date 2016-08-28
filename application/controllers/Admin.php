@@ -100,6 +100,20 @@ class Admin extends CI_Controller {
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
 
+			$config['upload_path'] = './uploads/payrolls/';
+			$config['allowed_types'] = 'pdf';
+
+			$this->load->library('upload', $config);
+			
+			if ( ! $this->upload->do_upload()){
+				$this->session->set_flashdata('errors', $this->upload->display_errors());
+			}
+			else{
+				$this->session->set_flashdata('success', $this->upload->data());
+			}
+
+			redirect('/admin/uploadpayroll','refresh');
+
 		} else {
 
 		}
