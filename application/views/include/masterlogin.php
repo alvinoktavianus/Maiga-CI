@@ -68,6 +68,9 @@
                         case 'uploadpayrollview':
                             $this->load->view('layouts/admin/uploadpayroll');
                             break;
+                        case 'updateemployee':
+                            $this->load->view('layouts/admin/updateemployee');
+                            break;
                     }
                     break;
                 case 'emp':

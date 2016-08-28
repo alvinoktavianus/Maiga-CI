@@ -69,7 +69,20 @@ class Admin extends CI_Controller {
 
 	public function updateemployee()
 	{
-		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' && $this->input->get('email') != null ) {
+			$this->load->model('user_model');
+			$data['profile'] = $this->user_model->find_by_email($this->input->get('email'))[0];
+			$data['page'] = "updateemployee";
+			$data['page_title'] = "Update Employee | Maiga";
+			$this->load->view('include/masterlogin', $data);
+		} else {
+
+		}
+	}
+
+	public function do_update_employee()
+	{
+		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' && $this->input->get('email') != null ) {
 
 		} else {
 
@@ -81,7 +94,7 @@ class Admin extends CI_Controller {
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
 
 		} else {
-			
+
 		}
 	}
 
