@@ -85,8 +85,11 @@ class Admin extends CI_Controller {
 	public function uploadpayroll()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+			$this->load->model('admin_model');
 			$data['page_title'] = "Upload Payroll | Maiga";
 			$data['page'] = "uploadpayrollview";
+			$data['payrolls'] = $this->admin_model->get_all_payrolls();
+			$data['employees'] = $this->admin_model->get_all_employees();
 			$this->load->view('include/masterlogin', $data);
 		} else {
 

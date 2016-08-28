@@ -27,6 +27,15 @@ class Admin_model extends CI_Model {
         $this->db->update('employees', $data);
     }
 
+    public function get_all_payrolls()
+    {
+        $this->db->select('employees.nama, payrolls.slipgaji, payrolls.isdownloaded, payrolls.createdttm');
+        $this->db->from('payrolls');
+        $this->db->join('employees', 'payrolls.email = employees.email');
+        $this->db->where('employees.status', 'Aktif');
+        return $this->db->get()->result();
+    }
+
 }
 
 /* End of file Admin_model.php */
