@@ -10,6 +10,11 @@ class Admin_model extends CI_Model {
 		return $this->db->get('employees')->result();
 	}
 
+    public function register_new_employee($data)
+    {
+        $this->db->insert('employees', $data);
+    }
+
 }
 
 /* End of file Admin_model.php */
