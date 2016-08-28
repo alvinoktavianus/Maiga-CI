@@ -6,8 +6,10 @@ class Employee extends CI_Controller {
 	public function profile()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
+			$this->load->model('employee_model');
 			$data['page_title'] = "Profile | Maiga";
 			$data['page'] = "profileview";
+			$data['employee'] = $this->employee_model->find_by_email($this->session->userdata('user_session')['email']);
 			$this->load->view('include/masterlogin', $data);
 		} else {
 			redirect('/','refresh');
