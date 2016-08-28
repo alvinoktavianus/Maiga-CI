@@ -71,7 +71,23 @@
                     }
                     break;
                 case 'emp':
-                    # code...
+                    switch ($page) {
+                        case 'homeview':
+                            $this->load->view('layouts/employee/home');
+                            break;
+                        case 'profileview':
+                            $this->load->view('layouts/employee/profile');
+                            break;
+                        case 'uploadassignmentview':
+                            $this->load->view('layouts/employee/uploadassignment');
+                            break;
+                        case 'downloadpayrollview':
+                            $this->load->view('layouts/employee/downloadpayroll');
+                            break;
+                        case 'updateprofileview':
+                            $this->load->view('layouts/employee/updateprofile');
+                            break;
+                    }
                     break;
 
             }
