@@ -3,11 +3,17 @@
         <h2 class="text-center">Profile</h2>
     </div>
     <div class="col-sm-2">
-        <a href="" class="btn btn-info">Update</a>
+        <a href="<?php echo base_url(); ?>employee/updateprofile" class="btn btn-info">Update</a>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-6">
+
+        <?php if ($this->session->flashdata('success')): ?>
+            <div class="alert alert-success" role="alert">
+                <strong><?php echo $this->session->flashdata('success'); ?></strong>
+            </div>
+        <?php endif; ?>
 
         <table class="table table-bordered">
             <tbody>
