@@ -47,10 +47,63 @@
 </nav>
 
 <div class="container">
-    
+    <?php
+        if ($this->session->userdata('user_session')['isloggedin']) {
+            switch ($this->session->userdata('user_session')['role']) {
+
+                case 'adm':
+                    switch ($page) {
+                        case 'homeview':
+                            $this->load->view('layouts/admin/home');
+                            break;
+                        case 'registerview':
+                            $this->load->view('layouts/admin/register');
+                            break;
+                        case 'employeelistview':
+                            $this->load->view('layouts/admin/employeelist');
+                            break;
+                        case 'downloadassignmentview':
+                            $this->load->view('layouts/admin/downloadassignment');
+                            break;
+                        case 'uploadpayrollview':
+                            $this->load->view('layouts/admin/uploadpayroll');
+                            break;
+                        case 'updateemployee':
+                            $this->load->view('layouts/admin/updateemployee');
+                            break;
+                    }
+                    break;
+                case 'emp':
+                    switch ($page) {
+                        case 'homeview':
+                            $this->load->view('layouts/employee/home');
+                            break;
+                        case 'profileview':
+                            $this->load->view('layouts/employee/profile');
+                            break;
+                        case 'uploadassignmentview':
+                            $this->load->view('layouts/employee/uploadassignment');
+                            break;
+                        case 'downloadpayrollview':
+                            $this->load->view('layouts/employee/downloadpayroll');
+                            break;
+                        case 'updateprofileview':
+                            $this->load->view('layouts/employee/updateprofile');
+                            break;
+                    }
+                    break;
+
+            }
+        }
+    ?>
 </div>
 
 <script src="<?php echo base_url(); ?>assets/js/vendor.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/script.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $( "input.datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>
 </body>
 </html>
