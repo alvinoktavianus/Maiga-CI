@@ -1,6 +1,6 @@
 <h2 class="text-center">Register</h2>
 
-<?php echo form_open(base_url().'admin/do_register', array( 'class' => 'form-horizontal', 'novalidate' => true )); ?>
+<?php echo form_open_multipart(base_url().'admin/do_register', array( 'class' => 'form-horizontal', 'novalidate' => true )); ?>
 
 <br><br>
 
