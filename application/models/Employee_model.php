@@ -42,6 +42,12 @@ class Employee_model extends CI_Model {
         return $this->db->get('payrolls')->result();
     }
 
+    public function insert_assignment_by_email($email, $data)
+    {
+        $this->db->where('email', $email);
+        $this->db->insert('assignments', $data);
+    }
+
 }
 
 /* End of file Employee_model.php */

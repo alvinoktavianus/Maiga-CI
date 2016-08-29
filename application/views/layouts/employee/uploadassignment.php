@@ -61,7 +61,7 @@
         <?php foreach( $assignments as $assignment ): ?>
             <tr>
                 <td><?php echo $assignment->assignment; ?></td>
-                <td><?php echo $assignment->createdttm; ?></td>
+                <td><?php echo date("D, d M Y | H:i", strtotime($assignment->createdttm)); ?></td>
                 <td><?php echo $assignment->description; ?></td>
             </tr>
         <?php endforeach; ?>
