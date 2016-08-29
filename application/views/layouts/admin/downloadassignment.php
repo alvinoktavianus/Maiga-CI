@@ -22,7 +22,7 @@
                     <?php echo date("D, d M Y | H:i", strtotime($assignment->createdttm)); ?>
                 </td>
                 <td>
-                    <?php echo $assignment->description; ?>
+                    <?php echo nl2br($assignment->description); ?>
                 </td>
             </tr>
         <?php endforeach; ?>
