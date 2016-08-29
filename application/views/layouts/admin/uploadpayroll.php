@@ -63,22 +63,14 @@
             <th>Nama</th>
             <th>Date</th>
             <th>Nama File</th>
-            <th>Checked</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach($payrolls as $payroll): ?>
             <tr>
                 <td><?php echo $payroll->nama; ?></td>
-                <td><?php echo $payroll->createdttm; ?></td>
+                <td><?php echo date("D, d M Y | H:i", strtotime($payroll->createdttm)); ?></td>
                 <td><?php echo $payroll->slipgaji; ?></td>
-                <td>
-                    <?php if ($payroll->isdownloaded == 'Y'): ?>
-                        <input type="checkbox" checked disabled>
-                    <?php elseif($payroll->isdownloaded == 'N'): ?>
-                        <input type="checkbox" disabled>
-                    <?php endif; ?>
-                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
