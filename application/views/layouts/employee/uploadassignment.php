@@ -55,6 +55,7 @@
             <th>Nama File</th>
             <th>Tanggal Upload</th>
             <th>Keterangan</th>
+            <th>Sudah Diperiksa?</th>
         </tr>
         </thead>
         <tbody>
@@ -62,7 +63,14 @@
             <tr>
                 <td><?php echo $assignment->assignment; ?></td>
                 <td><?php echo date("D, d M Y | H:i", strtotime($assignment->createdttm)); ?></td>
-                <td><?php echo $assignment->description; ?></td>
+                <td><?php echo nl2br($assignment->description); ?></td>
+                <td>
+                    <?php if ($assignment->ischecked == 'Y'): ?>
+                        <input type="checkbox" checked disabled>
+                    <?php elseif($assignment->ischecked == 'N'): ?>
+                        <input type="checkbox" disabled>
+                    <?php endif; ?>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>

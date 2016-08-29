@@ -101,6 +101,13 @@
         </div>
 
         <div class="form-group">
+            <?php echo form_label('Selesai Bekerja', 'endwork', array( 'class' => 'col-sm-4 control-label' )); ?>
+            <div class="col-sm-8">
+                <?php echo form_input('endwork', $this->session->flashdata('endwork'), array( 'class' => 'form-control datepicker', 'placeholder' => 'Masukan Tanggal Selesai Bekerja (yyyy-mm-dd)', 'id' => 'endwork' )); ?>
+            </div>
+        </div>
+
+        <div class="form-group">
             <?php echo form_label('Nama Bank Karyawan', 'bankaccountname', array( 'class' => 'col-sm-4 control-label' )); ?>
             <div class="col-sm-8">
                 <?php echo form_input('bankaccountname', $this->session->flashdata('bankaccountname'), array( 'class' => 'form-control', 'id' => 'bankaccountname', 'required' => true, 'maxlength' => 50, 'placeholder' => 'Masukan Nama Bank yang digunakan Karyawan' )); ?>

@@ -27,6 +27,7 @@ class Admin extends CI_Controller {
 			$this->form_validation->set_rules('mobile', 'No. HP', 'trim|required|numeric');
 			$this->form_validation->set_rules('department', 'Departemen', 'trim|required');
 			$this->form_validation->set_rules('startwork', 'Mulai Bekerja', 'trim|required');
+			$this->form_validation->set_rules('endwork', 'Selesai Bekerja', 'trim|required');
 			$this->form_validation->set_rules('bankaccountname', 'Nama Bank Karyawan', 'trim|required');
 			$this->form_validation->set_rules('bankaccountnumber', 'No. Rekening Karyawan', 'trim|required');
 
@@ -41,6 +42,7 @@ class Admin extends CI_Controller {
 				$this->session->set_flashdata('mobile', $this->input->post('mobile'));
 				$this->session->set_flashdata('department', $this->input->post('department'));
 				$this->session->set_flashdata('startwork', $this->input->post('startwork'));
+				$this->session->set_flashdata('endwork', $this->input->post('endwork'));
 				$this->session->set_flashdata('bankaccountname', $this->input->post('bankaccountname'));
 				$this->session->set_flashdata('bankaccountnumber', $this->input->post('bankaccountnumber'));
 				$this->session->set_flashdata('errors', validation_errors());
@@ -57,6 +59,7 @@ class Admin extends CI_Controller {
 					'jabatan' => $this->input->post('position'),
 					'department' => $this->input->post('department'),
 					'mulaibekerja' => $this->input->post('startwork'),
+					'selesaibekerja' => $this->input->post('endwork'),
 					'namabank' => $this->input->post('bankaccountname'),
 					'norekening' => $this->input->post('bankaccountnumber'),
 					'status' => $this->input->post('status'),
@@ -136,7 +139,7 @@ class Admin extends CI_Controller {
 			redirect('/admin/uploadpayroll','refresh');
 
 		} else {
-
+			redirect('/','refresh');
 		}
 	}
 
@@ -149,7 +152,28 @@ class Admin extends CI_Controller {
 			$data['assignments'] = $this->admin_model->get_all_assignments();
 			$this->load->view('include/masterlogin', $data);
 		} else {
+			redirect('/','refresh');
+		}
+	}
 
+	public function markassignment()
+	{
+		if ( $this->session->has_userdata('user_session') &&
+			 $this->session->userdata('user_session')['role'] == 'adm' &&
+			 $this->input->get('email') != null &&
+			 $this->input->get('filename') != null ) {
+
+			$this->db->trans_begin();
+
+			$this->load->model('admin_model');
+			$this->admin_model->mark_assignment($this->input->get('email'), $this->input->get('filename'));
+
+			$this->db->trans_commit();
+
+			redirect('/admin/downloadassignment','refresh');
+
+		} else {
+			redirect('/','refresh');
 		}
 	}
 
@@ -221,11 +245,12 @@ class Admin extends CI_Controller {
 
 			$data['status'] = "Tidak Aktif";
 
-			$this->db->trans_begin();
-
 			$this->load->model('admin_model');
-			$this->admin_model->remove_employee($this->input->get('email'), $data);
+			if ( $this->admin_model->find_by_email($this->input->get('email'))->selesaibekerja == null )
+				$data['selesaibekerja'] = date("Y-m-d", time());
 
+			$this->db->trans_begin();
+			$this->admin_model->remove_employee($this->input->get('email'), $data);
 			$this->db->trans_commit();
 
 			$this->session->set_flashdata('success', "Successfully remove ".$this->input->get('email').'.');

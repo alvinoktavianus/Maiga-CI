@@ -40,12 +40,16 @@ class Users extends CI_Controller {
 
 					foreach($this->user_model->find_by_email($email) as $result) {
 						if ( $result->email == $email && $this->bcrypt->check_password($password, $result->password) ) {
-							$array = array(
-								'email' => $result->email,
-								'role' => $result->role,
-								'isloggedin' => true
-							);
-							$this->session->set_userdata( 'user_session', $array );
+							if ( $result->status == 'Aktif' ) {
+								$array = array(
+									'email' => $result->email,
+									'role' => $result->role,
+									'isloggedin' => true
+								);
+								$this->session->set_userdata( 'user_session', $array );
+							} else {
+								$this->session->set_flashdata('errors', 'Account has been disabled by administrator.');
+							}
 						} else {
 							$this->session->set_flashdata('errors', 'Wrong email address or password!');
 						}
