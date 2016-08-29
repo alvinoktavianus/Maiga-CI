@@ -9,6 +9,19 @@
     <div class="row">
 
         <div class="col-md-6 col-md-offset-3">
+
+            <?php if ($this->session->flashdata('errors')): ?>
+                <div class="alert alert-danger" role="alert">
+                    <strong><?php echo $this->session->flashdata('errors'); ?></strong>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($this->session->flashdata('success')): ?>
+                <div class="alert alert-success" role="alert">
+                    <strong><?php echo $this->session->flashdata('success'); ?></strong>
+                </div>
+            <?php endif; ?>
+
             <div class="form-group">
                 <?php echo form_label('Pilih nama karyawan', 'namakaryawan', array( 'class' => 'col-sm-4 control-label' )); ?>
                 <div class="col-sm-8">

@@ -19,8 +19,10 @@ class Employee extends CI_Controller {
 	public function uploadassignment()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
+			$this->load->model('employee_model');
 			$data['page_title'] = "Upload Assignment | Maiga";
 			$data['page'] = "uploadassignmentview";
+			$data['assignments'] = $this->employee_model->get_all_assignment($this->session->userdata('user_session')['email']);
 			$this->load->view('include/masterlogin', $data);
 		} else {
 			redirect('/','refresh');
@@ -30,9 +32,21 @@ class Employee extends CI_Controller {
 	public function downloadpayroll()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
+			$this->load->model('employee_model');
 			$data['page_title'] = "Download Payroll | Maiga";
 			$data['page'] = "downloadpayrollview";
+			$data['payrolls'] = $this->employee_model->get_all_payrolls_by_email($this->session->userdata('user_session')['email']);
 			$this->load->view('include/masterlogin', $data);
+		} else {
+			redirect('/','refresh');
+		}
+	}
+
+	public function getpayroll()
+	{
+		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' && $this->input->get('filename') != null ) {
+			$path = "./uploads/payrolls/".$this->input->get('filename');
+			force_download($path, NULL);
 		} else {
 			redirect('/','refresh');
 		}
@@ -40,7 +54,51 @@ class Employee extends CI_Controller {
 
 	public function do_uploadassignment()
 	{
-		
+		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
+
+			$this->form_validation->set_rules('description', 'Description', 'trim|required');
+
+			if ($this->form_validation->run() == false) {
+				$this->session->set_flashdata('errors', validation_errors());
+				redirect('/employee/uploadassignment','refresh');
+			} else {
+
+				$config['upload_path'] = './uploads/assignments/';
+				$config['allowed_types'] = 'doc|docx';
+				
+				$this->upload->initialize($config);
+				
+				if ( $this->upload->do_upload('assignment')){
+
+					$data = $this->upload->data();
+
+					$query = array(
+						'email' => $this->session->userdata('user_session')['email'],
+						'assignment' => $data['file_name'],
+						'description' => $this->input->post('description')
+					);
+
+					$this->db->trans_begin();
+
+					$this->load->model('employee_model');
+					$this->employee_model->insert_assignment_by_email( $this->session->userdata('user_session')['email'], $query );
+
+					$this->db->trans_commit();
+
+					$this->session->set_flashdata('success', 'Successfully upload assignment.');
+
+					redirect('/employee/uploadassignment','refresh');
+				}
+				else{
+					$this->session->set_flashdata('errors', $this->upload->display_errors());
+					redirect('/employee/uploadassignment','refresh');
+				}
+
+			}
+
+		} else {
+			redirect('/','refresh');
+		}
 	}
 
 	public function updateprofile()

@@ -23,6 +23,31 @@ class Employee_model extends CI_Model {
         $this->db->update('employees', $data);
     }
 
+    public function get_all_assignment($email)
+    {
+        $this->db->select('assignments.assignment, assignments.createdttm, assignments.description');
+        $this->db->from('assignments');
+        $this->db->join('employees', 'employees.email = assignments.email');
+        $this->db->where('employees.role', 'emp');
+        $this->db->where('employees.status', 'Aktif');
+        $this->db->where('employees.email', $email);
+        $this->db->order_by('assignments.createdttm', 'desc');
+        return $this->db->get()->result();
+    }
+
+    public function get_all_payrolls_by_email($email)
+    {
+        $this->db->where('email', $email);
+        $this->db->order_by('createdttm', 'desc');
+        return $this->db->get('payrolls')->result();
+    }
+
+    public function insert_assignment_by_email($email, $data)
+    {
+        $this->db->where('email', $email);
+        $this->db->insert('assignments', $data);
+    }
+
 }
 
 /* End of file Employee_model.php */
