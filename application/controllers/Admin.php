@@ -224,11 +224,12 @@ class Admin extends CI_Controller {
 
 			$data['status'] = "Tidak Aktif";
 
-			$this->db->trans_begin();
-
 			$this->load->model('admin_model');
-			$this->admin_model->remove_employee($this->input->get('email'), $data);
+			if ( $this->admin_model->find_by_email($this->input->get('email'))->selesaibekerja == null )
+				$data['selesaibekerja'] = date("Y-m-d", time());
 
+			$this->db->trans_begin();
+			$this->admin_model->remove_employee($this->input->get('email'), $data);
 			$this->db->trans_commit();
 
 			$this->session->set_flashdata('success', "Successfully remove ".$this->input->get('email').'.');

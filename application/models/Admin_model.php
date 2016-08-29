@@ -52,6 +52,12 @@ class Admin_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function find_by_email($email)
+    {
+        $this->db->where('email', $email);
+        return $this->db->get('employees')->result()[0];
+    }
+
 }
 
 /* End of file Admin_model.php */
