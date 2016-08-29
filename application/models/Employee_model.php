@@ -35,6 +35,13 @@ class Employee_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function get_all_payrolls_by_email($email)
+    {
+        $this->db->where('email', $email);
+        $this->db->order_by('createdttm', 'desc');
+        return $this->db->get('payrolls')->result();
+    }
+
 }
 
 /* End of file Employee_model.php */
