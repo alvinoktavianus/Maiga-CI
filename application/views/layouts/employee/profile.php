@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <th>Tanggal Lahir</th>
-                <td><?php echo $employee->tanggallahir; ?></td>
+                <td><?php echo date("D, d M Y", strtotime($employee->tanggallahir)); ?></td>
             </tr>
             <tr>
                 <th>No. Handphone</th>
@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <th>Mulai Bekerja</th>
-                <td><?php echo $employee->mulaibekerja; ?></td>
+                <td><?php echo date("D, d M Y", strtotime($employee->mulaibekerja)); ?></td>
             </tr>
             <tr>
                 <th>Nama Bank</th>
