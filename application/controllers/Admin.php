@@ -139,7 +139,7 @@ class Admin extends CI_Controller {
 			redirect('/admin/uploadpayroll','refresh');
 
 		} else {
-
+			redirect('/','refresh');
 		}
 	}
 
@@ -152,7 +152,28 @@ class Admin extends CI_Controller {
 			$data['assignments'] = $this->admin_model->get_all_assignments();
 			$this->load->view('include/masterlogin', $data);
 		} else {
+			redirect('/','refresh');
+		}
+	}
 
+	public function markassignment()
+	{
+		if ( $this->session->has_userdata('user_session') &&
+			 $this->session->userdata('user_session')['role'] == 'adm' &&
+			 $this->input->get('email') != null &&
+			 $this->input->get('filename') != null ) {
+
+			$this->db->trans_begin();
+
+			$this->load->model('admin_model');
+			$this->admin_model->mark_assignment($this->input->get('email'), $this->input->get('filename'));
+
+			$this->db->trans_commit();
+
+			redirect('/admin/downloadassignment','refresh');
+
+		} else {
+			redirect('/','refresh');
 		}
 	}
 

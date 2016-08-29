@@ -29,7 +29,7 @@ class Admin_model extends CI_Model {
 
     public function get_all_payrolls()
     {
-        $this->db->select('employees.nama, payrolls.slipgaji, payrolls.isdownloaded, payrolls.createdttm');
+        $this->db->select('employees.nama, payrolls.slipgaji, payrolls.createdttm');
         $this->db->from('payrolls');
         $this->db->join('employees', 'payrolls.email = employees.email');
         $this->db->where('employees.status', 'Aktif');
@@ -43,7 +43,7 @@ class Admin_model extends CI_Model {
 
     public function get_all_assignments()
     {
-        $this->db->select('employees.nama, employees.email, assignments.assignment, assignments.createdttm, assignments.description');
+        $this->db->select('employees.nama, employees.email, assignments.assignment, assignments.createdttm, assignments.description, assignments.ischecked');
         $this->db->from('assignments');
         $this->db->where('employees.role', 'emp');
         $this->db->where('employees.status', 'Aktif');
@@ -56,6 +56,14 @@ class Admin_model extends CI_Model {
     {
         $this->db->where('email', $email);
         return $this->db->get('employees')->result()[0];
+    }
+
+    public function mark_assignment($email, $filename)
+    {
+        $data['ischecked'] = 'Y';
+        $this->db->where('email', $email);
+        $this->db->where('assignment', $filename);
+        $this->db->update('assignments', $data);
     }
 
 }

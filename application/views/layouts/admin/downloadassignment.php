@@ -9,6 +9,7 @@
             <th>File</th>
             <th>Tanggal Upload</th>
             <th>Keterangan</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,18 @@
                 </td>
                 <td>
                     <?php echo nl2br($assignment->description); ?>
+                </td>
+                <td>
+                    <?php if ( $assignment->ischecked == 'N' ): ?>
+                        <?php
+                            $param = "email=".$assignment->email."&filename=".$assignment->assignment;
+                            echo form_open(base_url().'admin/markassignment?'.$param);
+                            echo form_submit('mark', 'Mark as Checked', array( 'class' => 'btn btn-danger btn-xs' ));
+                            echo form_close();
+                        ?>
+                    <?php elseif ( $assignment->ischecked == 'Y' ): ?>
+                        Checked
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
