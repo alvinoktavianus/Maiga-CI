@@ -36,6 +36,11 @@ class Admin_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function insert_payroll($data)
+    {
+        $this->db->insert('payrolls', $data);
+    }
+
 }
 
 /* End of file Admin_model.php */

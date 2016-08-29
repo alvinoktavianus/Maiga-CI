@@ -30,7 +30,7 @@
                         foreach ($employees as $employee) {
                             $options[$employee->email] = $employee->nama;
                         }
-                        echo form_dropdown('namakaryawan', $options, '', array( 'class' => 'form-control', 'required' => true ));
+                        echo form_dropdown('namakaryawan', $options, '', array( 'class' => 'form-control', 'required' => true, 'id' => 'namakaryawan' ));
                     ?>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <div class="form-group">
                 <?php echo form_label('Upload Slip Gaji', 'slipgaji', array( 'class' => 'col-sm-4 control-label' )); ?>
                 <div class="col-sm-8">
-                    <?php echo form_input(array( 'class'=>'form-control', 'accept'=>'application/pdf', 'required'=>true, 'type' => 'file' )); ?>
+                    <?php echo form_input(array( 'class'=>'form-control', 'accept'=>'application/pdf', 'required'=>true, 'type' => 'file', 'id' => 'slipgaji', 'name' => 'slipgaji' )); ?>
                 </div>
             </div>
 
