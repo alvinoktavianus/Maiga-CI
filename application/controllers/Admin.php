@@ -27,6 +27,7 @@ class Admin extends CI_Controller {
 			$this->form_validation->set_rules('mobile', 'No. HP', 'trim|required|numeric');
 			$this->form_validation->set_rules('department', 'Departemen', 'trim|required');
 			$this->form_validation->set_rules('startwork', 'Mulai Bekerja', 'trim|required');
+			$this->form_validation->set_rules('endwork', 'Selesai Bekerja', 'trim|required');
 			$this->form_validation->set_rules('bankaccountname', 'Nama Bank Karyawan', 'trim|required');
 			$this->form_validation->set_rules('bankaccountnumber', 'No. Rekening Karyawan', 'trim|required');
 
@@ -41,6 +42,7 @@ class Admin extends CI_Controller {
 				$this->session->set_flashdata('mobile', $this->input->post('mobile'));
 				$this->session->set_flashdata('department', $this->input->post('department'));
 				$this->session->set_flashdata('startwork', $this->input->post('startwork'));
+				$this->session->set_flashdata('endwork', $this->input->post('endwork'));
 				$this->session->set_flashdata('bankaccountname', $this->input->post('bankaccountname'));
 				$this->session->set_flashdata('bankaccountnumber', $this->input->post('bankaccountnumber'));
 				$this->session->set_flashdata('errors', validation_errors());
@@ -57,6 +59,7 @@ class Admin extends CI_Controller {
 					'jabatan' => $this->input->post('position'),
 					'department' => $this->input->post('department'),
 					'mulaibekerja' => $this->input->post('startwork'),
+					'selesaibekerja' => $this->input->post('endwork'),
 					'namabank' => $this->input->post('bankaccountname'),
 					'norekening' => $this->input->post('bankaccountnumber'),
 					'status' => $this->input->post('status'),
