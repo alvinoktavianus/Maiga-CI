@@ -92,7 +92,7 @@ class Admin extends CI_Controller {
 			$data['employees'] = $this->admin_model->get_all_employees();
 			$this->load->view('include/masterlogin', $data);
 		} else {
-
+			redirect('/','refresh');
 		}
 	}
 
@@ -105,24 +105,35 @@ class Admin extends CI_Controller {
 			if ($this->form_validation->run() == false) {
 				$this->session->set_flashdata('errors', validation_errors());
 			} else {
-
-				$config['upload_path'] = './uploads/';
+				$config['upload_path'] = './uploads/payrolls/';
 				$config['allowed_types'] = 'pdf';
-
+				
 				$this->upload->initialize($config);
+				
+				if ( $this->upload->do_upload('slipgaji')){
 
-				if ( ! $this->upload->do_upload()){
-					$error = array('error' => $this->upload->display_errors());
+					$data = $this->upload->data();
+
+					$query = array(
+						'email' => $this->input->post('namakaryawan'),
+						'slipgaji' => $data['file_name']
+					);
+
+					$this->db->trans_begin();
+
+					$this->load->model('admin_model');
+					$this->admin_model->insert_payroll( $query );
+
+					$this->db->trans_commit();
+
+					$this->session->set_flashdata('success', 'Successfully upload assignment.');
 				}
 				else{
-					$data = array('upload_data' => $this->upload->data());
-					echo "success";
+					$this->session->set_flashdata('errors', $this->upload->display_errors());
 				}
-
-				$this->session->set_flashdata('success', 'Successfully upload payrolls.');
 			}
 
-			// redirect('/admin/uploadpayroll','refresh');
+			redirect('/admin/uploadpayroll','refresh');
 
 		} else {
 
@@ -132,11 +143,23 @@ class Admin extends CI_Controller {
 	public function downloadassignment()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+			$this->load->model('admin_model');
 			$data['page_title'] = "Download Assignment | Maiga";
 			$data['page'] = "downloadassignmentview";
+			$data['assignments'] = $this->admin_model->get_all_assignments();
 			$this->load->view('include/masterlogin', $data);
 		} else {
 
+		}
+	}
+
+	public function getassignment()
+	{
+		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' && $this->input->get('filename') != null ) {
+			$path = "./uploads/assignments/".$this->input->get('filename');
+			force_download($path, NULL);
+		} else {
+			redirect('/','refresh');
 		}
 	}
 

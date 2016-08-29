@@ -36,6 +36,22 @@ class Admin_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function insert_payroll($data)
+    {
+        $this->db->insert('payrolls', $data);
+    }
+
+    public function get_all_assignments()
+    {
+        $this->db->select('employees.nama, employees.email, assignments.assignment, assignments.createdttm, assignments.description');
+        $this->db->from('assignments');
+        $this->db->where('employees.role', 'emp');
+        $this->db->where('employees.status', 'Aktif');
+        $this->db->join('employees', 'employees.email = assignments.email');
+        $this->db->order_by('assignments.createdttm', 'desc');
+        return $this->db->get()->result();
+    }
+
 }
 
 /* End of file Admin_model.php */
