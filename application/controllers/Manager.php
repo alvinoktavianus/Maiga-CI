@@ -27,6 +27,70 @@ class Manager extends CI_Controller {
         }
     }
 
+    public function createassignment()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' ) {
+            $this->load->model('manager_model');
+            $data['page_title'] = "Create Assignment | Treezia";
+            $data['page'] = 'createassignmentview';
+            $data['homeworks'] = $this->manager_model->get_all_homework();
+            $this->load->view('include/masterlogin', $data);
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
+    public function do_createassignment()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' ) {
+
+            $this->form_validation->set_rules('topic', 'Topik', 'trim|required');
+
+            if ($this->form_validation->run() == false) {
+                
+                $this->session->set_flashdata('topic', $this->input->post('topic'));
+                $this->session->set_flashdata('errors', validation_errors());
+
+            } else {
+                
+                $config['upload_path'] = './uploads/homeworks/';
+                $config['allowed_types'] = 'doc|docx|pdf|xls|xlsx';
+                
+                $this->upload->initialize($config);
+                
+                if ( $this->upload->do_upload('filetugas')){
+
+                    $data = $this->upload->data();
+
+                    $query = array(
+                        'topic' => $this->input->post('topic'),
+                        'homework' => $data['file_name']
+                    );
+
+                    $this->db->trans_begin();
+
+                    $this->load->model('manager_model');
+                    $this->manager_model->create_new_assignment( $query );
+
+                    $this->db->trans_commit();
+
+                    $this->session->set_flashdata('success', 'Successfully create new assignment.');
+
+                }
+                else{
+                    $this->session->set_flashdata('topic', $this->input->post('topic'));
+                    $this->session->set_flashdata('errors', $this->upload->display_errors());
+                }
+
+            }
+
+            redirect('/manager/createassignment','refresh');
+
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
     public function downloadassignment()
     {
         if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' && $this->input->get('filename') != null ) {

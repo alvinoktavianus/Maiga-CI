@@ -81,6 +81,9 @@
                         case 'homeview':
                             $this->load->view('layouts/manager/home');
                             break;
+                        case 'createassignmentview':
+                            $this->load->view('layouts/manager/createassignment');
+                            break;
                         case 'checkassignmentview':
                             $this->load->view('layouts/manager/checkassignment');
                             break;
