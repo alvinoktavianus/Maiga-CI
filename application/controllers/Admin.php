@@ -33,12 +33,12 @@ class Admin extends CI_Controller {
 			$this->form_validation->set_rules('name', 'Nama', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
 			$this->form_validation->set_rules('conf-pass', 'Ulangi Password', 'trim|required|matches[password]');
-			$this->form_validation->set_rules('lob', 'Tempat Lahir', 'trim|required');
-			$this->form_validation->set_rules('dob', 'Tanggal Lahir', 'trim|required');
+			$this->form_validation->set_rules('lob', 'Tempat Lahir', 'trim');
+			$this->form_validation->set_rules('dob', 'Tanggal Lahir', 'trim');
 			$this->form_validation->set_rules('mobile', 'No. HP', 'trim|required|numeric');
 			$this->form_validation->set_rules('department', 'Departemen', 'trim|required');
 			$this->form_validation->set_rules('startwork', 'Mulai Bekerja', 'trim|required');
-			$this->form_validation->set_rules('endwork', 'Selesai Bekerja', 'trim|required');
+			$this->form_validation->set_rules('endwork', 'Selesai Bekerja', 'trim');
 			$this->form_validation->set_rules('bankaccountname', 'Nama Bank Karyawan', 'trim|required');
 			$this->form_validation->set_rules('bankaccountnumber', 'No. Rekening Karyawan', 'trim|required');
 			$this->form_validation->set_rules('position', 'Jabatan', 'trim|required');

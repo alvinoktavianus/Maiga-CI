@@ -12,6 +12,9 @@ class Users extends CI_Controller {
 				case 'adm':
 					redirect('/admin','refresh');
 					break;
+				case 'mgr':
+					redirect('/manager','refresh');
+					break;
 				case 'emp':
 					redirect('/employee','refresh');
 					break;
@@ -50,8 +53,10 @@ class Users extends CI_Controller {
 									case 'adm':
 										redirect('/admin','refresh');
 										break;
+									case 'mgr':
+										redirect('/manager','refresh');
+										break;
 									case 'emp':
-										$data['page_title'] = "Employee ".$this->session->userdata('user_session')['email']." | Treezia";
 										redirect('/employee','refresh');
 										break;
 								}

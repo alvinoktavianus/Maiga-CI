@@ -37,6 +37,9 @@
                 case 'adm':
                     $this->load->view('navbar/nav_admin');
                     break;
+                case 'mgr':
+                    $this->load->view('navbar/nav_manager');
+                    break;
                 case 'emp':
                     $this->load->view('navbar/nav_employee');
                     break;
@@ -70,6 +73,16 @@
                             break;
                         case 'updateemployee':
                             $this->load->view('layouts/admin/updateemployee');
+                            break;
+                    }
+                    break;
+                case 'mgr':
+                    switch ($page) {
+                        case 'homeview':
+                            $this->load->view('layouts/manager/home');
+                            break;
+                        case 'checkassignmentview':
+                            $this->load->view('layouts/manager/checkassignment');
                             break;
                     }
                     break;
