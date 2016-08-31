@@ -143,6 +143,7 @@
                 <?php 
                     $data = array(
                         'adm' => 'Administrator',
+                        'mgr' => 'Manager',
                         'emp' => 'Karyawan'
                     );
                     echo form_dropdown('role', $data, 'emp', array( 'class' => 'form-control', 'id' => 'role', 'required' => true ));

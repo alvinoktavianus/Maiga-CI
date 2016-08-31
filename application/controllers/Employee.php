@@ -3,6 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Employee extends CI_Controller {
 
+	public function index()
+	{
+		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
+			$data['page_title'] = "Employee ".$this->session->userdata('user_session')['email']." | Treezia";
+			$data['page'] = 'homeview';
+			$this->load->view('include/masterlogin', $data);
+		} else {
+			redirect('/','refresh');
+		}
+	}
+
 	public function profile()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {

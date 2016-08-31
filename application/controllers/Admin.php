@@ -3,6 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
 
+	public function index()
+	{
+		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+			$data['page_title'] = "Admin Home | Maiga";
+			$data['page'] = 'homeview';
+			$this->load->view('include/masterlogin', $data);
+		} else {
+			redirect('/','refresh');
+		}
+	}
+
 	public function register()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
