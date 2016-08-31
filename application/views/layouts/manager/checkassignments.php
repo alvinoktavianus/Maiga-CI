@@ -32,6 +32,7 @@
     <thead>
         <th>Email</th>
         <th>Nama Karyawan</th>
+        <th>Deskripsi</th>
         <th>File Tugas</th>
         <th>Tanggal Upload</th>
         <th>Tanggal Update</th>
@@ -43,6 +44,7 @@
             <tr>
                 <td><?php echo $assignment->email; ?></td>
                 <td><?php echo $assignment->nama; ?></td>
+                <td><?php echo nl2br($assignment->description); ?></td>
                 <td><a target="_blank" href="<?php echo base_url(); ?>manager/downloadassignment?filename=<?php echo $assignment->assignment; ?>"><?php echo $assignment->assignment; ?></a></td>
                 <td><?php echo date("D, d M Y | H:i", strtotime($assignment->createdttm)); ?></td>
                 <td><?php if ( $assignment->updatedttm != null ) echo date("D, d M Y | H:i", strtotime($assignment->updatedttm)); ?></td>
