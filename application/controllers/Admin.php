@@ -30,6 +30,7 @@ class Admin extends CI_Controller {
 			$this->form_validation->set_rules('endwork', 'Selesai Bekerja', 'trim|required');
 			$this->form_validation->set_rules('bankaccountname', 'Nama Bank Karyawan', 'trim|required');
 			$this->form_validation->set_rules('bankaccountnumber', 'No. Rekening Karyawan', 'trim|required');
+			$this->form_validation->set_rules('position', 'Jabatan', 'trim|required');
 
 			if ($this->form_validation->run() == FALSE) {
 
@@ -45,6 +46,7 @@ class Admin extends CI_Controller {
 				$this->session->set_flashdata('endwork', $this->input->post('endwork'));
 				$this->session->set_flashdata('bankaccountname', $this->input->post('bankaccountname'));
 				$this->session->set_flashdata('bankaccountnumber', $this->input->post('bankaccountnumber'));
+				$this->session->set_flashdata('position', $this->input->post('position'));
 				$this->session->set_flashdata('errors', validation_errors());
 
 			} else {
