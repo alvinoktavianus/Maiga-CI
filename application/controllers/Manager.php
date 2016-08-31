@@ -21,6 +21,10 @@ class Manager extends CI_Controller {
             $data['page_title'] = "Check Assignment | Treezia";
             $data['page'] = 'checkassignmentview';
             $data['topics'] = $this->manager_model->get_all_topics();
+            $data['csrf'] = array(
+                'name' => $this->security->get_csrf_token_name(),
+                'hash' => $this->security->get_csrf_hash()
+            );
             $this->load->view('include/masterlogin', $data);
         } else {
             redirect('/','refresh');

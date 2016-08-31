@@ -2,7 +2,7 @@
 <br>
 
 <form action="<?php echo base_url(); ?>manager/checkassignments" class="form-horizontal" enctype="multipart/form-data" method="get" accept-charset="utf-8">
-
+<?php echo form_hidden($csrf['name'], $csrf['hash']); ?>
 <div class="row">
 
     <div class="col-md-6 col-md-offset-3">
