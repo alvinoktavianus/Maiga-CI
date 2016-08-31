@@ -87,6 +87,9 @@
                         case 'checkassignmentview':
                             $this->load->view('layouts/manager/checkassignment');
                             break;
+                        case 'checkassignmentsview':
+                            $this->load->view('layouts/manager/checkassignments');
+                            break;
                     }
                     break;
                 case 'emp':

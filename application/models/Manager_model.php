@@ -22,6 +22,24 @@ class Manager_model extends CI_Model {
         $this->db->insert('homeworks', $data);
     }
 
+    public function get_all_topics()
+    {
+        $results = $this->db->get('homeworks')->result();
+        $topics[''] = '';
+        foreach($results as $result) $topics[$result->topic] = $result->topic;
+        return $topics;
+    }
+
+    public function get_assignments_by_topic($topic)
+    {
+        $this->db->select('assignments.email, assignments.assignment, assignments.createdttm, assignments.updatedttm, employees.nama, assignments.status');
+        $this->db->from('assignments');
+        $this->db->join('employees', 'employees.email = assignments.email', 'left');
+        $this->db->where('assignments.topic', $topic);
+        $this->db->order_by('assignments.updatedttm', 'desc');
+        return $this->db->get()->result();
+    }
+
 }
 
 /* End of file Manager_model.php */

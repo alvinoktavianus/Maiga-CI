@@ -20,7 +20,22 @@ class Manager extends CI_Controller {
             $this->load->model('manager_model');
             $data['page_title'] = "Check Assignment | Treezia";
             $data['page'] = 'checkassignmentview';
-            $data['assignments'] = $this->manager_model->get_all_assignment();
+            $data['topics'] = $this->manager_model->get_all_topics();
+            $this->load->view('include/masterlogin', $data);
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
+    public function checkassignments()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' && $this->input->get('topic') != null ) {
+            $this->load->model('manager_model');
+            $data['page_title'] = "Check Assignment by topic : ".$this->input->get('topic')." | Treezia";
+            $data['topic'] = $this->input->get('topic');
+            $data['topics'] = $this->manager_model->get_all_topics();
+            $data['page'] = 'checkassignmentsview';
+            $data['assignments'] = $this->manager_model->get_assignments_by_topic( $this->input->get('topic') );
             $this->load->view('include/masterlogin', $data);
         } else {
             redirect('/','refresh');
@@ -44,7 +59,7 @@ class Manager extends CI_Controller {
     {
         if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' ) {
 
-            $this->form_validation->set_rules('topic', 'Topik', 'trim|required');
+            $this->form_validation->set_rules('topic', 'Topik', 'trim|required|is_unique[homeworks.topic]');
 
             if ($this->form_validation->run() == false) {
                 
