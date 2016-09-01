@@ -72,17 +72,7 @@
         <div class="form-group">
             <?php echo form_label('Jabatan', 'position', array( 'class' => 'col-sm-4 control-label' )); ?>
             <div class="col-sm-8">
-                <?php 
-                    $data = array(
-                        'Chief Executive Officer' => 'Chief Executive Officer',
-                        'HRD & PR Manager' => 'HRD & PR Manager',
-                        'Marketing' => 'Marketing',
-                        'Web Designer' => 'Web Designer',
-                        'Blog Designer' => 'Blog Designer',
-                        'Karyawan' => 'Karyawan'
-                    );
-                    echo form_dropdown('position', $data, 'Karyawan', array( 'class' => 'form-control', 'required' => true, 'id' => 'position' ));
-                ?>
+                <?php echo form_input('position', $this->session->flashdata('position'), array( 'class' => 'form-control', 'id' => 'position', 'placeholder' => 'Masukan Jabatan', 'required' => true )); ?>
             </div>
         </div>
 
@@ -153,6 +143,7 @@
                 <?php 
                     $data = array(
                         'adm' => 'Administrator',
+                        'mgr' => 'Manager',
                         'emp' => 'Karyawan'
                     );
                     echo form_dropdown('role', $data, 'emp', array( 'class' => 'form-control', 'id' => 'role', 'required' => true ));

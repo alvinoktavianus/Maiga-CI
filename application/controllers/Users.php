@@ -10,14 +10,15 @@ class Users extends CI_Controller {
 		} else {
 			switch ($this->session->userdata('user_session')['role']) {
 				case 'adm':
-					$data['page_title'] = "Admin Home | Maiga";
+					redirect('/admin','refresh');
+					break;
+				case 'mgr':
+					redirect('/manager','refresh');
 					break;
 				case 'emp':
-					$data['page_title'] = "Employee ".$this->session->userdata('user_session')['email']." | Treezia";
+					redirect('/employee','refresh');
 					break;
 			}
-			$data['page'] = 'homeview';
-			$this->load->view('include/masterlogin', $data);
 		}
 	}
 
@@ -47,6 +48,18 @@ class Users extends CI_Controller {
 									'isloggedin' => true
 								);
 								$this->session->set_userdata( 'user_session', $array );
+								$data['page'] = 'homeview';
+								switch ($result->role) {
+									case 'adm':
+										redirect('/admin','refresh');
+										break;
+									case 'mgr':
+										redirect('/manager','refresh');
+										break;
+									case 'emp':
+										redirect('/employee','refresh');
+										break;
+								}
 							} else {
 								$this->session->set_flashdata('errors', 'Account has been disabled by administrator.');
 							}

@@ -3,6 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Employee extends CI_Controller {
 
+	public function index()
+	{
+		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
+			$data['page_title'] = "Employee ".$this->session->userdata('user_session')['email']." | Treezia";
+			$data['page'] = 'homeview';
+			$this->load->view('include/masterlogin', $data);
+		} else {
+			redirect('/','refresh');
+		}
+	}
+
 	public function profile()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
@@ -22,6 +33,7 @@ class Employee extends CI_Controller {
 			$this->load->model('employee_model');
 			$data['page_title'] = "Upload Assignment | Maiga";
 			$data['page'] = "uploadassignmentview";
+			$data['options'] = $this->employee_model->get_topic();
 			$data['assignments'] = $this->employee_model->get_all_assignment($this->session->userdata('user_session')['email']);
 			$this->load->view('include/masterlogin', $data);
 		} else {
@@ -47,6 +59,48 @@ class Employee extends CI_Controller {
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' && $this->input->get('filename') != null ) {
 			$path = "./uploads/payrolls/".$this->input->get('filename');
 			force_download($path, NULL);
+		} else {
+			redirect('/','refresh');
+		}
+	}
+
+	public function do_upload_revision()
+	{
+		if ( $this->session->has_userdata('user_session') &&
+			 $this->session->userdata('user_session')['role'] == 'emp' &&
+			 $this->input->get('topic') != null &&
+			 $this->input->get('filename') != null ) {
+
+			$config['upload_path'] = './uploads/assignments/';
+			$config['allowed_types'] = 'doc|docx';
+
+			$this->upload->initialize($config);
+
+			if ( $this->upload->do_upload('revision')){
+
+				$data = $this->upload->data();
+
+				$email = $this->session->userdata('user_session')['email'];
+				$topic = $this->input->get('topic');
+				$filename = $this->input->get('filename');
+
+				$query = array(
+					'assignment' => $data['file_name'],
+					'status' => 'P',
+					'updatedttm' => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+				);
+
+				$this->db->trans_begin();
+
+				$this->load->model('employee_model');
+				$this->employee_model->update_assignment( $email, $topic, $filename, $query );
+
+				$this->db->trans_commit();
+
+			}
+
+			redirect('/employee/uploadassignment','refresh');
+
 		} else {
 			redirect('/','refresh');
 		}

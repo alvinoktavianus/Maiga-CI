@@ -3,6 +3,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
 
+	public function index()
+	{
+		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+			$data['page_title'] = "Admin Home | Maiga";
+			$data['page'] = 'homeview';
+			$this->load->view('include/masterlogin', $data);
+		} else {
+			redirect('/','refresh');
+		}
+	}
+
 	public function register()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
@@ -22,14 +33,15 @@ class Admin extends CI_Controller {
 			$this->form_validation->set_rules('name', 'Nama', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[8]');
 			$this->form_validation->set_rules('conf-pass', 'Ulangi Password', 'trim|required|matches[password]');
-			$this->form_validation->set_rules('lob', 'Tempat Lahir', 'trim|required');
-			$this->form_validation->set_rules('dob', 'Tanggal Lahir', 'trim|required');
+			$this->form_validation->set_rules('lob', 'Tempat Lahir', 'trim');
+			$this->form_validation->set_rules('dob', 'Tanggal Lahir', 'trim');
 			$this->form_validation->set_rules('mobile', 'No. HP', 'trim|required|numeric');
 			$this->form_validation->set_rules('department', 'Departemen', 'trim|required');
 			$this->form_validation->set_rules('startwork', 'Mulai Bekerja', 'trim|required');
-			$this->form_validation->set_rules('endwork', 'Selesai Bekerja', 'trim|required');
+			$this->form_validation->set_rules('endwork', 'Selesai Bekerja', 'trim');
 			$this->form_validation->set_rules('bankaccountname', 'Nama Bank Karyawan', 'trim|required');
 			$this->form_validation->set_rules('bankaccountnumber', 'No. Rekening Karyawan', 'trim|required');
+			$this->form_validation->set_rules('position', 'Jabatan', 'trim|required');
 
 			if ($this->form_validation->run() == FALSE) {
 
@@ -45,6 +57,7 @@ class Admin extends CI_Controller {
 				$this->session->set_flashdata('endwork', $this->input->post('endwork'));
 				$this->session->set_flashdata('bankaccountname', $this->input->post('bankaccountname'));
 				$this->session->set_flashdata('bankaccountnumber', $this->input->post('bankaccountnumber'));
+				$this->session->set_flashdata('position', $this->input->post('position'));
 				$this->session->set_flashdata('errors', validation_errors());
 
 			} else {
@@ -163,12 +176,12 @@ class Admin extends CI_Controller {
 			 $this->input->get('email') != null &&
 			 $this->input->get('filename') != null ) {
 
-			$this->db->trans_begin();
+			// $this->db->trans_begin();
 
-			$this->load->model('admin_model');
-			$this->admin_model->mark_assignment($this->input->get('email'), $this->input->get('filename'));
+			// $this->load->model('admin_model');
+			// $this->admin_model->mark_assignment($this->input->get('email'), $this->input->get('filename'));
 
-			$this->db->trans_commit();
+			// $this->db->trans_commit();
 
 			redirect('/admin/downloadassignment','refresh');
 
