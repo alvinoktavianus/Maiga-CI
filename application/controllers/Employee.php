@@ -33,6 +33,7 @@ class Employee extends CI_Controller {
 			$this->load->model('employee_model');
 			$data['page_title'] = "Upload Assignment | Maiga";
 			$data['page'] = "uploadassignmentview";
+			$data['options'] = $this->employee_model->get_topic();
 			$data['assignments'] = $this->employee_model->get_all_assignment($this->session->userdata('user_session')['email']);
 			$this->load->view('include/masterlogin', $data);
 		} else {

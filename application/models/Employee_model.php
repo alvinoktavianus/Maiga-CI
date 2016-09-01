@@ -25,7 +25,7 @@ class Employee_model extends CI_Model {
 
     public function get_all_assignment($email)
     {
-        $this->db->select('assignments.assignment, assignments.createdttm, assignments.description, assignments.ischecked');
+        $this->db->select('assignments.assignment, assignments.createdttm, assignments.description, assignments.status, assignments.checkedon, assignments.topic');
         $this->db->from('assignments');
         $this->db->join('employees', 'employees.email = assignments.email');
         $this->db->where('employees.role', 'emp');
@@ -46,6 +46,15 @@ class Employee_model extends CI_Model {
     {
         $this->db->where('email', $email);
         $this->db->insert('assignments', $data);
+    }
+
+    public function get_topic()
+    {
+        $this->db->select('topic');
+        $results = $this->db->get('homeworks')->result();
+        $topic[''] = '';
+        foreach ($results as $result) $topic[$result->topic] = $result->topic;
+        return $topic;
     }
 
 }

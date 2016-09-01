@@ -23,6 +23,13 @@
         <?php endif; ?>
 
         <div class="form-group">
+            <?php echo form_label('Pilih Topik', 'topic', array( 'class' => 'control-label col-sm-4' )); ?>
+            <div class="col-sm-8">
+                <?php echo form_dropdown('topic', $options, '', array( 'class' => 'form-control', 'required' => true, 'id' => 'topic' )); ?>
+            </div>
+        </div>
+
+        <div class="form-group">
             <?php echo form_label('Upload Tugas', 'assignment', array( 'class' => 'control-label col-sm-4' )); ?>
             <div class="col-sm-8">
                 <?php echo form_input(array( 'type' => 'file', 'id' => 'assignment', 'name' => 'assignment', 'accept' => '.doc, .docx', 'required' => true, 'class' => 'form-control' )); ?>
@@ -53,22 +60,28 @@
         <thead>
         <tr>
             <th>Nama File</th>
-            <th>Tanggal Upload</th>
+            <th>Topik</th>
             <th>Keterangan</th>
-            <th>Sudah Diperiksa?</th>
+            <th>Tanggal Upload</th>
+            <th>Tanggal Periksa</th>
+            <th>Status</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach( $assignments as $assignment ): ?>
             <tr>
                 <td><?php echo $assignment->assignment; ?></td>
-                <td><?php echo date("D, d M Y | H:i", strtotime($assignment->createdttm)); ?></td>
+                <td><?php echo $assignment->topic; ?></td>
                 <td><?php echo nl2br($assignment->description); ?></td>
+                <td><?php echo date("D, d M Y | H:i", strtotime($assignment->createdttm)); ?></td>
+                <td><?php if ($assignment->checkedon != null) echo date("D, d M Y | H:i", strtotime($assignment->checkedon)); ?></td>
                 <td>
-                    <?php if ($assignment->ischecked == 'Y'): ?>
-                        <input type="checkbox" checked disabled>
-                    <?php elseif($assignment->ischecked == 'N'): ?>
-                        <input type="checkbox" disabled>
+                    <?php if ( $assignment->status == 'P' ): ?>
+                        <a class="btn btn-info btn-xs">Pending</a>
+                    <?php elseif( $assignment->status == 'A' ): ?>
+                        <a class="btn btn-success btn-xs">Approved</a>
+                    <?php elseif( $assignment->status == 'C' ): ?>
+                        <a class="btn btn-danger btn-xs">Canceled</a>
                     <?php endif; ?>
                 </td>
             </tr>
