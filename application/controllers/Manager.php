@@ -131,7 +131,7 @@ class Manager extends CI_Controller {
 
             $data = array(
                 'status' => $this->input->get('status'),
-                'checkedon' => date('Y-m-d H:i:s', time())
+                'checkedon' => date('Y-m-d H:i:s', now('Asia/Jakarta'))
             );
 
             $this->db->trans_begin();

@@ -176,12 +176,12 @@ class Admin extends CI_Controller {
 			 $this->input->get('email') != null &&
 			 $this->input->get('filename') != null ) {
 
-			$this->db->trans_begin();
+			// $this->db->trans_begin();
 
-			$this->load->model('admin_model');
-			$this->admin_model->mark_assignment($this->input->get('email'), $this->input->get('filename'));
+			// $this->load->model('admin_model');
+			// $this->admin_model->mark_assignment($this->input->get('email'), $this->input->get('filename'));
 
-			$this->db->trans_commit();
+			// $this->db->trans_commit();
 
 			redirect('/admin/downloadassignment','refresh');
 
