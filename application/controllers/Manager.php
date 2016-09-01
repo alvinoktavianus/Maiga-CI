@@ -126,13 +126,24 @@ class Manager extends CI_Controller {
              $this->session->userdata('user_session')['role'] == 'mgr' &&
              $this->input->get('email') != null &&
              $this->input->get('filename') != null &&
-             $this->input->get('status') != null ) {
+             $this->input->get('status') != null &&
+             $this->input->get('topic') != null ) {
 
             $data = array(
-                
+                'status' => $this->input->get('status'),
+                'checkedon' => date('Y-m-d H:i:s', time())
             );
 
-            redirect('/manager/checkassignment','refresh');
+            $this->db->trans_begin();
+
+            $this->load->model('manager_model');
+            $this->manager_model->update_assignment( $this->input->get('email'), $data, $this->input->get('filename') );
+
+            $this->db->trans_commit();
+
+            $param = $this->security->get_csrf_token_name().'='.$this->security->get_csrf_hash().'&topic='.$this->input->get('topic');
+
+            redirect('/manager/checkassignments?'.$param,'refresh');
 
         } else {
             redirect('/','refresh');

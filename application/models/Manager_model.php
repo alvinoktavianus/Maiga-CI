@@ -31,6 +31,13 @@ class Manager_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function update_assignment($email, $data, $assignment)
+    {
+        $this->db->where('email', $email);
+        $this->db->where('assignment', $assignment);
+        $this->db->update('assignments', $data);
+    }
+
 }
 
 /* End of file Manager_model.php */

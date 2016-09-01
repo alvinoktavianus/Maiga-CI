@@ -51,8 +51,8 @@
                 <td>
                     <?php 
                         if ( $assignment->status == 'P' ) {
-                            echo form_open(base_url().'manager/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=A');
-                            echo form_submit('approve', 'Approve', array( 'class' => 'btn btn-success btn-xs' ));
+                            echo form_open(base_url().'manager/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=A&topic='.$this->input->get('topic'));
+                            echo form_submit('', 'Approve', array( 'class' => 'btn btn-success btn-xs' ));
                             echo form_close();
                         }
                         else {
@@ -70,8 +70,8 @@
                 <td>
                     <?php 
                         if ( $assignment->status == 'P' ) {
-                            echo form_open(base_url().'manager/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=C');
-                            echo form_submit('approve', 'Cancel', array( 'class' => 'btn btn-danger btn-xs' ));
+                            echo form_open(base_url().'manager/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=C&topic='.$this->input->get('topic'));
+                            echo form_submit('', 'Cancel', array( 'class' => 'btn btn-danger btn-xs' ));
                             echo form_close();
                         }
                         else {
