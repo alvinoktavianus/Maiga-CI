@@ -57,6 +57,14 @@ class Employee_model extends CI_Model {
         return $topic;
     }
 
+    public function update_assignment($email, $topic, $filename, $data)
+    {
+        $this->db->where('email', $email);
+        $this->db->where('topic', $topic);
+        $this->db->where('assignment', $filename);
+        $this->db->update('assignments', $data);
+    }
+
 }
 
 /* End of file Employee_model.php */

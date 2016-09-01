@@ -64,6 +64,48 @@ class Employee extends CI_Controller {
 		}
 	}
 
+	public function do_upload_revision()
+	{
+		if ( $this->session->has_userdata('user_session') &&
+			 $this->session->userdata('user_session')['role'] == 'emp' &&
+			 $this->input->get('topic') != null &&
+			 $this->input->get('filename') != null ) {
+
+			$config['upload_path'] = './uploads/assignments/';
+			$config['allowed_types'] = 'doc|docx';
+
+			$this->upload->initialize($config);
+
+			if ( $this->upload->do_upload('revision')){
+
+				$data = $this->upload->data();
+
+				$email = $this->session->userdata('user_session')['email'];
+				$topic = $this->input->get('topic');
+				$filename = $this->input->get('filename');
+
+				$query = array(
+					'assignment' => $data['file_name'],
+					'status' => 'P',
+					'updatedttm' => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+				);
+
+				$this->db->trans_begin();
+
+				$this->load->model('employee_model');
+				$this->employee_model->update_assignment( $email, $topic, $filename, $query );
+
+				$this->db->trans_commit();
+
+			}
+
+			redirect('/employee/uploadassignment','refresh');
+
+		} else {
+			redirect('/','refresh');
+		}
+	}
+
 	public function do_uploadassignment()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
