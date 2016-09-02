@@ -7,7 +7,7 @@
 
         <div class="card card-block">
 
-            <?php echo form_open_multipart(base_url().'employee/do_uploadassignment', array( 'class' => 'form-horizontal' )); ?>
+            <?php echo form_open_multipart(base_url().'employee/do_uploadassignment'); ?>
 
             <div class="row">
 
@@ -25,29 +25,29 @@
                         </div>
                     <?php endif; ?>
 
-                    <div class="form-group">
-                        <?php echo form_label('Pilih Topik', 'topic', array( 'class' => 'control-label col-sm-4' )); ?>
+                    <div class="form-group row">
+                        <?php echo form_label('Pilih Topik', 'topic', array( 'class' => 'form-control-label col-sm-4' )); ?>
                         <div class="col-sm-8">
                             <?php echo form_dropdown('topic', $options, '', array( 'class' => 'form-control', 'required' => true, 'id' => 'topic' )); ?>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <?php echo form_label('Upload Tugas', 'assignment', array( 'class' => 'control-label col-sm-4' )); ?>
+                    <div class="form-group row">
+                        <?php echo form_label('Upload Tugas', 'assignment', array( 'class' => 'form-control-label col-sm-4' )); ?>
                         <div class="col-sm-8">
                             <?php echo form_input(array( 'type' => 'file', 'id' => 'assignment', 'name' => 'assignment', 'accept' => '.doc, .docx', 'required' => true, 'class' => 'form-control' )); ?>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <?php echo form_label('Deskripsi', 'description', array( 'class' => 'control-label col-sm-4' )); ?>
+                    <div class="form-group row">
+                        <?php echo form_label('Deskripsi', 'description', array( 'class' => 'form-control-label col-sm-4' )); ?>
                         <div class="col-sm-8">
                             <?php echo form_textarea('description', '', array( 'class' => 'form-control', 'id' => 'description', 'required' => true, 'style' => 'resize: none;' )); ?>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <p class="text-center">
+                    <div class="form-group row">
+                        <p style="text-align: center;">
                             <?php echo form_submit('save', 'Save', array( 'class' => 'btn btn-success' )); ?>
                         </p>
                     </div>
@@ -60,7 +60,7 @@
 
             <?php if (count($assignments) > 0): ?>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-responsive">
+                    <table class="table table-bordered table-striped table-sm">
                         <thead>
                         <tr>
                             <th>Nama File</th>
@@ -82,13 +82,13 @@
                                 <td><?php if ($assignment->checkedon != null) echo date("D, d M Y | H:i", strtotime($assignment->checkedon)); ?></td>
                                 <td>
                                     <?php if ( $assignment->status == 'P' ): ?>
-                                        <a class="btn btn-info btn-xs">Pending</a>
+                                        <p class="text-info">Pending</p>
                                     <?php elseif( $assignment->status == 'A' ): ?>
-                                        <a class="btn btn-success btn-xs">Approved</a>
+                                        <p class="text-success">Approved</p>
                                     <?php elseif( $assignment->status == 'C' ): ?>
-                                        <a class="btn btn-danger btn-xs">Canceled</a>
+                                        <p class="text-danger">Canceled</p>
                                     <?php elseif( $assignment->status == 'R' ): ?>
-                                        <a class="btn btn-warning btn-xs">Need Revision</a>
+                                        <p class="text-warning">Need Revision</p>
                                     <?php endif; ?>
                                 </td>
                                 <td>
@@ -97,17 +97,12 @@
                                             $filename = $assignment->assignment;
                                             $topic = $assignment->topic;
                                             $url = base_url().'employee/do_upload_revision?topic='.$topic.'&filename='.$filename;
-                                            echo form_open_multipart($url); ?>
+                                            echo form_open_multipart($url);
+                                            echo form_input(array( 'type' => 'file', 'id' => 'revision', 'name' => 'revision', 'accept' => '.doc, .docx', 'required' => true, 'class' => 'form-control' )); ?>
 
-                                            <div class="form-group">
-                                                <?php echo form_input(array( 'type' => 'file', 'id' => 'revision', 'name' => 'revision', 'accept' => '.doc, .docx', 'required' => true, 'class' => 'form-control' )); ?>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <p class="text-center">
+                                                <p style="text-align: center; margin-top: 4px;">
                                                 <?php echo form_submit('', 'Upload Revisi', array('class' => 'btn btn-warning btn-xs')); ?>
                                                 </p>
-                                            </div>
 
                                             <?php echo form_close();
                                         } else {

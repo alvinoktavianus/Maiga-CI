@@ -13,8 +13,8 @@
                     <div class="col-md-6 col-md-offset-3">
 
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
+                            <table class="table table-bordered table-striped table-sm">
+                                <thead class="thead-inverse">
                                 <tr>
                                     <th>Payroll</th>
                                     <th>Upload Date</th>
