@@ -57,23 +57,25 @@
 
 <?php if (count($payrolls) > 0): ?>
 
-    <table class="table table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>Nama</th>
-            <th>Date</th>
-            <th>Nama File</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach($payrolls as $payroll): ?>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
             <tr>
-                <td><?php echo $payroll->nama; ?></td>
-                <td><?php echo date("D, d M Y | H:i", strtotime($payroll->createdttm)); ?></td>
-                <td><?php echo $payroll->slipgaji; ?></td>
+                <th>Nama</th>
+                <th>Date</th>
+                <th>Nama File</th>
             </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            <?php foreach($payrolls as $payroll): ?>
+                <tr>
+                    <td><?php echo $payroll->nama; ?></td>
+                    <td><?php echo date("D, d M Y | H:i", strtotime($payroll->createdttm)); ?></td>
+                    <td><?php echo $payroll->slipgaji; ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 
 <?php endif; ?>
