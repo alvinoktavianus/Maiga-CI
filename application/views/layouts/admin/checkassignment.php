@@ -7,21 +7,21 @@
 
         <div class="card card-block">
 
-            <form action="<?php echo base_url(); ?>admin/checkassignments" class="form-horizontal" enctype="multipart/form-data" method="get" accept-charset="utf-8">
+            <form action="<?php echo base_url(); ?>admin/checkassignments" enctype="multipart/form-data" method="get" accept-charset="utf-8">
             <?php echo form_hidden($csrf['name'], $csrf['hash']); ?>
             <div class="row">
 
                 <div class="col-md-6 col-md-offset-3">
 
-                    <div class="form-group">
-                        <?php echo form_label('Pilih Topik', 'topic', array( 'class' => 'col-sm-4 control-label' )); ?>
+                    <div class="form-group row">
+                        <?php echo form_label('Pilih Topik', 'topic', array( 'class' => 'col-sm-4 form-control-label' )); ?>
                         <div class="col-sm-8">
                             <?php echo form_dropdown('topic', $topics, '', array( 'class' => 'form-control', 'required' => true )); ?>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <p class="text-center">
+                    <div class="form-group row">
+                        <p style="text-align: center;">
                             <?php echo form_submit('', 'Pilih', array( 'class' => 'btn btn-success' )); ?>
                         </p>
                     </div>

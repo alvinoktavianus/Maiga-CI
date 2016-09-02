@@ -29,8 +29,8 @@
                             </div>
                         <?php endif; ?>
 
-                        <div class="form-group">
-                            <?php echo form_label('Pilih nama karyawan', 'namakaryawan', array( 'class' => 'col-sm-4 control-label' )); ?>
+                        <div class="form-group row">
+                            <?php echo form_label('Pilih nama karyawan', 'namakaryawan', array( 'class' => 'col-sm-4 form-control-label' )); ?>
                             <div class="col-sm-8">
                                 <?php
                                     $options[''] = '';
@@ -42,15 +42,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <?php echo form_label('Upload Slip Gaji', 'slipgaji', array( 'class' => 'col-sm-4 control-label' )); ?>
+                        <div class="form-group row">
+                            <?php echo form_label('Upload Slip Gaji', 'slipgaji', array( 'class' => 'col-sm-4 form-control-label' )); ?>
                             <div class="col-sm-8">
                                 <?php echo form_input(array( 'class'=>'form-control', 'accept'=>'application/pdf', 'required'=>true, 'type' => 'file', 'id' => 'slipgaji', 'name' => 'slipgaji' )); ?>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <p class="text-center">
+                        <div class="form-group row">
+                            <p style="text-align: center;">
                                 <?php echo form_submit('save', 'Save', array( 'class'=>'btn btn-success' )); ?>    
                             </p>
                         </div>
@@ -65,11 +65,11 @@
             <?php if (count($payrolls) > 0): ?>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="thead-inverse">
                         <tr>
                             <th>Nama</th>
-                            <th>Date</th>
+                            <th>Tanggal Upload</th>
                             <th>Nama File</th>
                         </tr>
                         </thead>

@@ -15,13 +15,14 @@
                 </div>
             <?php endif; ?>
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
-                    <thead>
+                <table class="table table-bordered table-striped table-sm">
+                    <thead class="thead-inverse">
                     <tr>
                         <th>Nama Karyawan</th>
                         <th>Email</th>
                         <th>Jabatan</th>
                         <th>Departemen</th>
+                        <th>Hak Akses</th>
                         <th colspan="3">Status</th>
                     </tr>
                     </thead>
@@ -32,11 +33,23 @@
                     		<td><?php echo $employee->email; ?></td>
                     		<td><?php echo $employee->jabatan; ?></td>
                     		<td><?php echo $employee->department; ?></td>
+                            <td>
+                                <?php
+                                    switch ($employee->role) {
+                                        case 'emp':
+                                            echo "Karyawan";
+                                            break;
+                                        case 'mgr':
+                                            echo "Manager";
+                                            break;
+                                    }
+                                ?>
+                            </td>
                     		<td><?php echo $employee->status; ?></td>
                     		<td><a href="<?php echo base_url(); ?>admin/updateemployee?email=<?php echo $employee->email; ?>">Update Employee</a></td>
                     		<td>
                     			<?php echo form_open(base_url().'admin/removeemployee?email='.$employee->email); ?>
-                				<?php echo form_submit('remove', 'Remove', array( 'class' => 'btn btn-danger btn-xs' )); ?>
+                				<?php echo form_submit('remove', 'Remove', array( 'class' => 'btn btn-danger btn-sm' )); ?>
                     			<?php echo form_close(); ?>
                     		</td>
                     	</tr>
