@@ -25,22 +25,22 @@
                         </div>
                     <?php endif; ?>
 
-                    <div class="form-group">
-                        <?php echo form_label('Topik', 'topic', array( 'class' => 'col-sm-4 control-label' )); ?>
+                    <div class="form-group row">
+                        <?php echo form_label('Topik', 'topic', array( 'class' => 'col-sm-4 form-control-label' )); ?>
                         <div class="col-sm-8">
                             <?php echo form_input('topic', $this->session->flashdata('topic'), array( 'class' => 'form-control', 'id' => 'topic', 'placeholder' => 'Masukan topik tugas' )); ?>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <?php echo form_label('File Tugas', 'filetugas', array( 'class' => 'col-sm-4 control-label' )); ?>
+                    <div class="form-group row">
+                        <?php echo form_label('File Tugas', 'filetugas', array( 'class' => 'col-sm-4 form-control-label' )); ?>
                         <div class="col-sm-8">
                             <?php echo form_input(array( 'type' => 'file', 'id' => 'filetugas', 'name' => 'filetugas', 'class' => 'form-control' )); ?>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <p class="text-center">
+                    <div class="form-group row">
+                        <p style="text-align: center;">
                             <?php echo form_submit('save', 'Simpan', array( 'class' => 'btn btn-success' )); ?>
                         </p>
                     </div>
@@ -57,8 +57,8 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
 
-                    <table class="table table-bordered table-striped">
-                        <thead>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead class="thead-inverse">
                             <th>Topik</th>
                             <th>File Tugas</th>
                             <th>Tanggal Dibuat</th>

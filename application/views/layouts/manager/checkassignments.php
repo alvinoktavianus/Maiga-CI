@@ -13,15 +13,15 @@
 
                 <div class="col-md-6 col-md-offset-3">
 
-                    <div class="form-group">
-                        <?php echo form_label('Pilih Topik', 'topic', array( 'class' => 'col-sm-4 control-label' )); ?>
+                    <div class="form-group row">
+                        <?php echo form_label('Pilih Topik', 'topic', array( 'class' => 'col-sm-4 form-control-label' )); ?>
                         <div class="col-sm-8">
-                            <?php echo form_dropdown('topic', $topics, $topic, array( 'class' => 'form-control', 'required' => true )); ?>
+                            <?php echo form_dropdown('topic', $topics, $topic, array( 'class' => 'form-control', 'required' => true, 'id' => 'topic' )); ?>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <p class="text-center">
+                    <div class="form-group row">
+                        <p style="text-align: center;">
                             <?php echo form_submit('', 'Pilih', array( 'class' => 'btn btn-success' )); ?>
                         </p>
                     </div>
@@ -34,17 +34,15 @@
 
             <?php if (count($assignments) > 0): ?>
 
-            <table class="table table-bordered table-striped">
-                <thead>
+            <table class="table table-bordered table-striped table-sm">
+                <thead class="thead-inverse">
                     <th>Email</th>
                     <th>Nama Karyawan</th>
                     <th>Deskripsi</th>
                     <th>File Tugas</th>
                     <th>Tanggal Upload</th>
                     <th>Tanggal Update</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th colspan="3">Action</th>
                 </thead>
                 <tbody>
                     <?php foreach($assignments as $assignment): ?>
