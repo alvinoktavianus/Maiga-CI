@@ -1,55 +1,64 @@
+
 <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/vendor.css">
-    <title><?php echo $page_title; ?></title>
-</head>
-<body>
+<html class="no-js" lang="en">
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="<?php echo base_url(); ?>">
-                Maiga
-                <!-- <img alt="Brand" src="{{asset('/logo.png')}}" class="img-responsive" style="margin: 0; height: 40px; margin-top: -10px;"> -->
-            </a>
-        </div>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title> <?php echo $page_title; ?> </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/vendor.css">
+        <!-- Theme initialization -->
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/app-green.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/jquery-ui.min.css">
+    </head>
 
-        <?php
-            switch ($this->session->userdata('user_session')['role']) {
-                case 'adm':
-                    $this->load->view('navbar/nav_admin');
-                    break;
-                case 'mgr':
-                    $this->load->view('navbar/nav_manager');
-                    break;
-                case 'emp':
-                    $this->load->view('navbar/nav_employee');
-                    break;
-            }
-        ?>
+    <body>
+        <div class="main-wrapper">
+            <div class="app sidebar-fixed header-fixed" id="app">
+                <header class="header">
+                    <div class="header-block header-block-collapse hidden-lg-up"> <button class="collapse-btn" id="sidebar-collapse-btn">
+                <i class="fa fa-bars"></i>
+            </button> </div>
+                    <div class="header-block header-block-nav">
+                        <ul class="nav-profile">
+                            <li class="profile dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <div class="img" style="background-image: url('https://avatars3.githubusercontent.com/u/3959008?v=3&s=40')"> </div> <span class="name"> <?php echo $this->session->userdata('user_session')['email']; ?> </span>
+                                </a>
+                                <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
+<!--                                 <?php if ( $this->session->userdata('user_session')['role'] == 'emp' || $this->session->userdata('user_session')['role'] == 'mgr' ): ?>
+                                    <a class="dropdown-item" href="<?php echo base_url(); ?>member/editprofile"> <i class="fa fa-user icon"></i> Profile </a>
+                                    <div class="dropdown-divider"></div>
+                                <?php endif; ?> -->
+                                    <a class="dropdown-item" href="<?php echo base_url(); ?>users/do_logout"> <i class="fa fa-power-off icon"></i> Logout </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </header>
 
-    </div><!-- /.container-fluid -->
-</nav>
+                <aside class="sidebar">
+                    <?php
+                        switch ($this->session->userdata('user_session')['role']) {
+                            case 'adm':
+                                $this->load->view('include/sidebar/sidebar_admin');
+                                break;
+                            case 'mgr':
+                                $this->load->view('include/sidebar/sidebar_manager');
+                                break;
+                            case 'emp':
+                                $this->load->view('include/sidebar/sidebar_employee');
+                                break;
+                        }
+                    ?>
+                </aside>
 
-<div class="container">
+                <div class="sidebar-overlay" id="sidebar-overlay"></div>
+                
     <?php
         if ($this->session->userdata('user_session')['isloggedin']) {
             switch ($this->session->userdata('user_session')['role']) {
@@ -115,14 +124,26 @@
             }
         }
     ?>
-</div>
 
-<script src="<?php echo base_url(); ?>assets/js/vendor.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/script.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $( "input.datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
-    });
-</script>
-</body>
+            </div>
+        </div>
+        <!-- Reference block for JS -->
+        <div class="ref" id="ref">
+            <div class="color-primary"></div>
+            <div class="chart">
+                <div class="color-primary"></div>
+                <div class="color-secondary"></div>
+            </div>
+        </div>
+        <script src="<?php echo base_url(); ?>assets/js/vendor.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/app.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-ui.min.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $( "input.datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' })
+            });
+        </script>
+    </body>
+
 </html>
+
