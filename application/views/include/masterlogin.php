@@ -65,8 +65,11 @@
                         case 'employeelistview':
                             $this->load->view('layouts/admin/employeelist');
                             break;
-                        case 'downloadassignmentview':
-                            $this->load->view('layouts/admin/downloadassignment');
+                        case 'checkassignmentview':
+                            $this->load->view('layouts/admin/checkassignment');
+                            break;
+                        case 'checkassignmentsview':
+                            $this->load->view('layouts/admin/checkassignments');
                             break;
                         case 'uploadpayrollview':
                             $this->load->view('layouts/admin/uploadpayroll');

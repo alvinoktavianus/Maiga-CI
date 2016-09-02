@@ -9,7 +9,7 @@
                 <li class="<?php if ($page == 'employeelistview' || $page == 'updateemployee') { echo "active"; } ?>"><a href="<?php echo base_url(); ?>admin/employeelist">Employee List</a></li>
             </ul>
         </li>
-        <li class="<?php if ($page == 'downloadassignmentview') { echo "active"; } ?>"><a href="<?php echo base_url(); ?>admin/downloadassignment">Download Assignment</a></li>
+        <li class="<?php if ($page == 'checkassignmentview' || $page == 'checkassignmentsview') { echo "active"; } ?>"><a href="<?php echo base_url(); ?>admin/checkassignment">Check Assignment</a></li>
         <li class="<?php if ($page == 'uploadpayrollview') { echo "active"; } ?>"><a href="<?php echo base_url(); ?>admin/uploadpayroll">Upload payroll</a></li>
         <li><a href="<?php echo base_url(); ?>users/do_logout">Logout</a></li>
     </ul>
