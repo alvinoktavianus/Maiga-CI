@@ -19,8 +19,8 @@
             </a> </li>
                 </ul>
             </li>
-            <li class="<?php if ($page == 'downloadassignmentview') { echo "active"; } ?>">
-                <a href="<?php echo base_url(); ?>admin/downloadassignment"> <i class="fa fa-inbox" aria-hidden="true"></i> Download Assignment </a>
+            <li class="<?php if ($page == 'checkassignmentview' || $page == 'checkassignmentsview') { echo "active"; } ?>">
+                <a href="<?php echo base_url(); ?>admin/checkassignment"> <i class="fa fa-inbox" aria-hidden="true"></i> Check Assignment </a>
             </li>
             <li class="<?php if ($page == 'uploadpayrollview') { echo "active"; } ?>">
                 <a href="<?php echo base_url(); ?>admin/uploadpayroll"> <i class="fa fa-check-square-o" aria-hidden="true"></i> Upload payroll</a>

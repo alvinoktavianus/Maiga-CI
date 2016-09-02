@@ -112,6 +112,68 @@ class Admin extends CI_Controller {
 		}
 	}
 
+    public function checkassignment()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+            $this->load->model('admin_model');
+            $data['page_title'] = "Check Assignment | Treezia";
+            $data['page'] = 'checkassignmentview';
+            $data['topics'] = $this->admin_model->get_all_topics();
+            $data['csrf'] = array(
+                'name' => $this->security->get_csrf_token_name(),
+                'hash' => $this->security->get_csrf_hash()
+            );
+            $this->load->view('include/masterlogin', $data);
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
+    public function checkassignments()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' && $this->input->get('topic') != null ) {
+            $this->load->model('admin_model');
+            $data['page_title'] = "Check Assignment by topic : ".$this->input->get('topic')." | Treezia";
+            $data['topic'] = $this->input->get('topic');
+            $data['topics'] = $this->admin_model->get_all_topics();
+            $data['page'] = 'checkassignmentsview';
+            $data['assignments'] = $this->admin_model->get_assignments_by_topic( $this->input->get('topic') );
+            $this->load->view('include/masterlogin', $data);
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
+    public function updateassignmentstatus()
+    {
+        if ( $this->session->has_userdata('user_session') &&
+             $this->session->userdata('user_session')['role'] == 'adm' &&
+             $this->input->get('email') != null &&
+             $this->input->get('filename') != null &&
+             $this->input->get('status') != null &&
+             $this->input->get('topic') != null ) {
+
+            $data = array(
+                'status' => $this->input->get('status'),
+                'checkedon' => date('Y-m-d H:i:s', now('Asia/Jakarta'))
+            );
+
+            $this->db->trans_begin();
+
+            $this->load->model('admin_model');
+            $this->admin_model->update_assignment( $this->input->get('email'), $data, $this->input->get('filename') );
+
+            $this->db->trans_commit();
+
+            $param = $this->security->get_csrf_token_name().'='.$this->security->get_csrf_hash().'&topic='.$this->input->get('topic');
+
+            redirect('/admin/checkassignments?'.$param,'refresh');
+
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
 	public function do_uploadpayroll()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
@@ -156,39 +218,15 @@ class Admin extends CI_Controller {
 		}
 	}
 
-	public function downloadassignment()
-	{
-		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
-			$this->load->model('admin_model');
-			$data['page_title'] = "Download Assignment | Maiga";
-			$data['page'] = "downloadassignmentview";
-			$data['assignments'] = $this->admin_model->get_all_assignments();
-			$this->load->view('include/masterlogin', $data);
-		} else {
-			redirect('/','refresh');
-		}
-	}
-
-	public function markassignment()
-	{
-		if ( $this->session->has_userdata('user_session') &&
-			 $this->session->userdata('user_session')['role'] == 'adm' &&
-			 $this->input->get('email') != null &&
-			 $this->input->get('filename') != null ) {
-
-			// $this->db->trans_begin();
-
-			// $this->load->model('admin_model');
-			// $this->admin_model->mark_assignment($this->input->get('email'), $this->input->get('filename'));
-
-			// $this->db->trans_commit();
-
-			redirect('/admin/downloadassignment','refresh');
-
-		} else {
-			redirect('/','refresh');
-		}
-	}
+    public function downloadassignment()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' && $this->input->get('filename') != null ) {
+            $path = './uploads/assignments/'.$this->input->get('filename');
+            force_download($path, NULL);
+        } else {
+            redirect('/','refresh');
+        }
+    }
 
 	public function getassignment()
 	{

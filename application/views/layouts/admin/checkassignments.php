@@ -7,7 +7,7 @@
 
         <div class="card card-block">
 
-            <form action="<?php echo base_url(); ?>manager/checkassignments" class="form-horizontal" enctype="multipart/form-data" method="get" accept-charset="utf-8">
+            <form action="<?php echo base_url(); ?>admin/checkassignments" class="form-horizontal" enctype="multipart/form-data" method="get" accept-charset="utf-8">
             <?php echo form_hidden($this->security->get_csrf_token_name(), $this->security->get_csrf_hash()); ?>
             <div class="row">
 
@@ -52,13 +52,13 @@
                             <td><?php echo $assignment->email; ?></td>
                             <td><?php echo $assignment->nama; ?></td>
                             <td><?php echo nl2br($assignment->description); ?></td>
-                            <td><a target="_blank" href="<?php echo base_url(); ?>manager/downloadassignment?filename=<?php echo $assignment->assignment; ?>"><?php echo $assignment->assignment; ?></a></td>
+                            <td><a target="_blank" href="<?php echo base_url(); ?>admin/downloadassignment?filename=<?php echo $assignment->assignment; ?>"><?php echo $assignment->assignment; ?></a></td>
                             <td><?php echo date("D, d M Y | H:i", strtotime($assignment->createdttm)); ?></td>
                             <td><?php if ( $assignment->updatedttm != null ) echo date("D, d M Y | H:i", strtotime($assignment->updatedttm)); ?></td>
                             <td>
                                 <?php 
                                     if ( $assignment->status == 'P' ) {
-                                        echo form_open(base_url().'manager/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=A&topic='.$this->input->get('topic'));
+                                        echo form_open(base_url().'admin/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=A&topic='.$this->input->get('topic'));
                                         echo form_submit('', 'Approve', array( 'class' => 'btn btn-success btn-xs' ));
                                         echo form_close();
                                     }
@@ -80,7 +80,7 @@
                             <td>
                                 <?php 
                                     if ( $assignment->status == 'P' ) {
-                                        echo form_open(base_url().'manager/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=R&topic='.$this->input->get('topic'));
+                                        echo form_open(base_url().'admin/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=R&topic='.$this->input->get('topic'));
                                         echo form_submit('', 'Need Revision', array( 'class' => 'btn btn-warning btn-xs' ));
                                         echo form_close();
                                     }
@@ -102,7 +102,7 @@
                             <td>
                                 <?php 
                                     if ( $assignment->status == 'P' ) {
-                                        echo form_open(base_url().'manager/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=C&topic='.$this->input->get('topic'));
+                                        echo form_open(base_url().'admin/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=C&topic='.$this->input->get('topic'));
                                         echo form_submit('', 'Cancel', array( 'class' => 'btn btn-danger btn-xs' ));
                                         echo form_close();
                                     }

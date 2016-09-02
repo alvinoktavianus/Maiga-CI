@@ -87,11 +87,13 @@
                                         <a class="btn btn-success btn-xs">Approved</a>
                                     <?php elseif( $assignment->status == 'C' ): ?>
                                         <a class="btn btn-danger btn-xs">Canceled</a>
+                                    <?php elseif( $assignment->status == 'R' ): ?>
+                                        <a class="btn btn-warning btn-xs">Need Revision</a>
                                     <?php endif; ?>
                                 </td>
                                 <td>
                                     <?php
-                                        if ( $assignment->status == 'C' ) {
+                                        if ( $assignment->status == 'C' || $assignment->status == 'R' ) {
                                             $filename = $assignment->assignment;
                                             $topic = $assignment->topic;
                                             $url = base_url().'employee/do_upload_revision?topic='.$topic.'&filename='.$filename;
@@ -116,6 +118,9 @@
                                                 case 'A':
                                                     echo "Approved";
                                                     break;
+                                                case 'R':
+                                                    echo "Need Revision";
+                                                    break;
                                             }
                                         }
                                     ?>
@@ -126,7 +131,6 @@
                     </table>
                 </div>
             <?php endif; ?>
-
         </div>
     </section>
 </article>
