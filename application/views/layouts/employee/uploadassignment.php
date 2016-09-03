@@ -1,6 +1,6 @@
 <article class="content responsive-tables-page">
     <div class="title-block">
-        <h1 class="title">Home</h1>
+        <h1 class="title">Upload Assignment</h1>
         <p class="title-description"> Maiga Corp. </p>
     </div>
     <section class="section">
@@ -61,7 +61,7 @@
             <?php if (count($assignments) > 0): ?>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-sm">
-                        <thead>
+                        <thead class="thead-inverse">
                         <tr>
                             <th>Nama File</th>
                             <th>Topik</th>
