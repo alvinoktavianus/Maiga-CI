@@ -45,7 +45,8 @@ class Users extends CI_Controller {
 								$array = array(
 									'email' => $result->email,
 									'role' => $result->role,
-									'isloggedin' => true
+									'isloggedin' => true,
+									'profilepic' => $result->profilepic
 								);
 								$this->session->set_userdata( 'user_session', $array );
 								$data['page'] = 'homeview';
@@ -86,6 +87,89 @@ class Users extends CI_Controller {
             $this->session->unset_userdata('user_session');
         }
         redirect('/','refresh');
+	}
+
+	public function editprofile()
+	{
+		if ( $this->session->has_userdata('user_session') ) {
+			$this->load->model('user_model');
+			$data['page_title'] = 'Edit Profile | Maiga';
+			$data['page'] = "editprofileview";
+			$data['profile'] = $this->user_model->find_by_email( $this->session->userdata('user_session')['email'] )[0];
+			$this->load->view('include/masterlogin', $data);
+		} else {
+			redirect('/','refresh');
+		}
+	}
+
+	public function do_editprofile()
+	{
+		if ( $this->session->has_userdata('user_session') ) {
+
+			$this->form_validation->set_rules('password', 'Password', 'trim|min_length[8]');
+			$this->form_validation->set_rules('conf-pass', 'Ulangi Password', 'trim|matches[password]');
+			$this->form_validation->set_rules('lob', 'Tempat Lahir', 'trim');
+			$this->form_validation->set_rules('dob', 'Tanggal Lahir', 'trim');
+			$this->form_validation->set_rules('bankaccountname', 'Nama Bank Karyawan', 'trim');
+			$this->form_validation->set_rules('bankaccountnumber', 'No. Rekening Karyawan', 'trim');
+
+			if ($this->form_validation->run() == false) {
+				$this->session->set_flashdata('errors', validation_errors());
+			} else {
+				$this->load->model('user_model');
+				$currentprofile = $this->user_model->find_by_email( $this->session->userdata('user_session')['email'] )[0];
+				$currpassword = $currentprofile->password;
+
+				if ( $this->input->post('old-password') != null ) {
+					if ($this->bcrypt->check_password($this->input->post('old-password'), $currpassword)) {
+						$query['password'] = $this->bcrypt->hash_password($this->input->post('password'));
+					} else {
+						$this->session->set_flashdata('errors', 'Password lama tidak sesuai');
+						redirect('/users/editprofile','refresh');
+					}
+				}
+
+				if ( $currentprofile->tempatlahir != $this->input->post('lob') ) $query['tempatlahir'] = $this->input->post('lob');
+				if ( $currentprofile->tanggallahir != $this->input->post('dob') ) $query['tanggallahir'] = $this->input->post('dob');
+				if ( $currentprofile->namabank != $this->input->post('bankaccountname') ) $query['namabank'] = $this->input->post('bankaccountname');
+				if ( $currentprofile->norekening != $this->input->post('bankaccountnumber') ) $query['norekening'] = $this->input->post('bankaccountnumber');
+
+				if ( $_FILES['profilepic']['name'] != "" ) {
+	                $config['upload_path'] = './uploads/profilepics/';
+	                $config['allowed_types'] = 'jpg|jpeg|png';
+	                
+	                $this->upload->initialize($config);
+	                
+	                if ( $this->upload->do_upload('profilepic')){
+
+	                    $data = $this->upload->data();
+	                    $query['profilepic'] = $data['file_name'];
+
+	                    $session = $this->session->userdata('user_session');
+	                    $session['profilepic'] = $data['file_name'];
+	                    $this->session->set_userdata( 'user_session', $session );
+
+	                }
+	                else{
+	                    $this->session->set_flashdata('errors', $this->upload->display_errors());
+	                    redirect('/users/editprofile','refresh');
+	                }
+				}
+				
+				if ( isset($query) ) {
+					$this->db->trans_begin();
+					$this->user_model->update_by_email( $this->session->userdata('user_session')['email'], $query );
+					$this->db->trans_commit();
+
+					$this->session->set_flashdata('success', 'Berhasil perbaharui data');
+				}
+			}
+
+			redirect('/users/editprofile','refresh');
+
+		} else {
+			redirect('/','refresh');
+		}
 	}
 
 }
