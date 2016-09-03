@@ -1,6 +1,6 @@
 <article class="content responsive-tables-page">
     <div class="title-block">
-        <h1 class="title">Check Assignment</h1>
+        <h1 class="title">Edit Profile</h1>
         <p class="title-description"> Maiga Corp. </p>
     </div>
     <section class="section">

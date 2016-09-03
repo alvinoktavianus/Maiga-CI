@@ -56,23 +56,25 @@
 
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-
-                    <table class="table table-bordered table-striped table-sm">
-                        <thead class="thead-inverse">
-                            <th>Topik</th>
-                            <th>File Tugas</th>
-                            <th>Tanggal Dibuat</th>
-                        </thead>
-                        <tbody>
-                            <?php foreach($homeworks as $homework): ?>
-                                <tr>
-                                    <td><?php echo $homework->topic; ?></td>
-                                    <td><?php echo $homework->homework; ?></td>
-                                    <td><?php echo date("D, d M Y | H:i", strtotime($homework->createdttm)); ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead class="thead-inverse">
+                                <th>Topik</th>
+                                <th>File Tugas</th>
+                                <th>Tanggal Dibuat</th>
+                            </thead>
+                            <tbody>
+                                <?php foreach($homeworks as $homework): ?>
+                                    <tr>
+                                        <td><?php echo $homework->topic; ?></td>
+                                        <td><?php echo $homework->homework; ?></td>
+                                        <td><?php echo date("D, d M Y | H:i", strtotime($homework->createdttm)); ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>
