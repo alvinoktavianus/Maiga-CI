@@ -27,13 +27,12 @@
                         <ul class="nav-profile">
                             <li class="profile dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <div class="img" style="background-image: url('https://avatars3.githubusercontent.com/u/3959008?v=3&s=40')"> </div> <span class="name"> <?php echo $this->session->userdata('user_session')['email']; ?> </span>
+                                <?php $profilepic = base_url().'uploads/profilepics/'.$this->session->userdata('user_session')['profilepic'];  ?>
+                                    <div class="img" style="background-image: url('<?php echo $profilepic; ?>')"> </div> <span class="name"> <?php echo $this->session->userdata('user_session')['email']; ?> </span>
                                 </a>
                                 <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
-<!--                                 <?php if ( $this->session->userdata('user_session')['role'] == 'emp' || $this->session->userdata('user_session')['role'] == 'mgr' ): ?>
-                                    <a class="dropdown-item" href="<?php echo base_url(); ?>member/editprofile"> <i class="fa fa-user icon"></i> Profile </a>
+                                    <a class="dropdown-item" href="<?php echo base_url(); ?>users/editprofile"> <i class="fa fa-user icon"></i> Profile </a>
                                     <div class="dropdown-divider"></div>
-                                <?php endif; ?> -->
                                     <a class="dropdown-item" href="<?php echo base_url(); ?>users/do_logout"> <i class="fa fa-power-off icon"></i> Logout </a>
                                 </div>
                             </li>
@@ -86,6 +85,9 @@
                         case 'updateemployee':
                             $this->load->view('layouts/admin/updateemployee');
                             break;
+                        case 'editprofileview':
+                            $this->load->view('include/editprofile');
+                            break;
                     }
                     break;
                 case 'mgr':
@@ -101,6 +103,9 @@
                             break;
                         case 'checkassignmentsview':
                             $this->load->view('layouts/manager/checkassignments');
+                            break;
+                        case 'editprofileview':
+                            $this->load->view('include/editprofile');
                             break;
                     }
                     break;
@@ -120,6 +125,9 @@
                             break;
                         case 'updateprofileview':
                             $this->load->view('layouts/employee/updateprofile');
+                            break;
+                        case 'editprofileview':
+                            $this->load->view('include/editprofile');
                             break;
                     }
                     break;
