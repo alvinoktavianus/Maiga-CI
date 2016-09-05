@@ -73,6 +73,9 @@
                         case 'employeelistview':
                             $this->load->view('layouts/admin/employeelist');
                             break;
+                        case 'createassignmentview':
+                            $this->load->view('layouts/admin/createassignment');
+                            break;
                         case 'checkassignmentview':
                             $this->load->view('layouts/admin/checkassignment');
                             break;

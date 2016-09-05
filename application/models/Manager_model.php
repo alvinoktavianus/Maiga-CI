@@ -5,6 +5,7 @@ class Manager_model extends CI_Model {
 
     public function get_all_homework()
     {
+        $this->db->where('createdby', 'mgr');
         return $this->db->get('homeworks')->result();
     }
 

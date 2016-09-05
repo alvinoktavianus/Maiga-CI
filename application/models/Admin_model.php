@@ -92,6 +92,16 @@ class Admin_model extends CI_Model {
         $this->db->update('assignments', $data);
     }
 
+    public function create_new_assignment($data)
+    {
+        $this->db->insert('homeworks', $data);
+    }
+
+    public function get_all_homeworks()
+    {
+        return $this->db->get('homeworks')->result();
+    }
+
 }
 
 /* End of file Admin_model.php */
