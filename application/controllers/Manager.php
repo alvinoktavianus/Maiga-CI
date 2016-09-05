@@ -6,8 +6,10 @@ class Manager extends CI_Controller {
     public function index()
     {
         if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' ) {
+            $this->load->model('manager_model');
             $data['page_title'] = "Manager | Maiga";
             $data['page'] = 'homeview';
+            $data['profile'] = $this->manager_model->find_by_email($this->session->userdata('user_session')['email']);
             $this->load->view('include/masterlogin', $data);
         } else {
             redirect('/','refresh');
