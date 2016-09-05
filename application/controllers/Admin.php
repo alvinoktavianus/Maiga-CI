@@ -116,7 +116,7 @@ class Admin extends CI_Controller {
     {
         if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
             $this->load->model('admin_model');
-            $data['page_title'] = "Check Assignment | Treezia";
+            $data['page_title'] = "Check Assignment | Maiga";
             $data['page'] = 'checkassignmentview';
             $data['topics'] = $this->admin_model->get_all_topics();
             $data['csrf'] = array(
@@ -133,7 +133,7 @@ class Admin extends CI_Controller {
     {
         if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' && $this->input->get('topic') != null ) {
             $this->load->model('admin_model');
-            $data['page_title'] = "Check Assignment by topic : ".$this->input->get('topic')." | Treezia";
+            $data['page_title'] = "Check Assignment by topic : ".$this->input->get('topic')." | Maiga";
             $data['topic'] = $this->input->get('topic');
             $data['topics'] = $this->admin_model->get_all_topics();
             $data['page'] = 'checkassignmentsview';
@@ -311,6 +311,76 @@ class Admin extends CI_Controller {
 
 		}
 	}
+
+    public function createassignment()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+            $this->load->model('admin_model');
+            $data['page_title'] = "Create Assignment | Maiga";
+            $data['page'] = 'createassignmentview';
+            $data['homeworks'] = $this->admin_model->get_all_homeworks();
+            $this->load->view('include/masterlogin', $data);
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
+    public function do_createassignment()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+
+            $this->form_validation->set_rules('topic', 'Topik', 'trim|required|is_unique[homeworks.topic]');
+            $this->form_validation->set_rules('assignedfor', 'Ditugaskan Untuk', 'trim|required');
+
+            if ($this->form_validation->run() == false) {
+                
+                $this->session->set_flashdata('topic', $this->input->post('topic'));
+                $this->session->set_flashdata('assignedfor', $this->input->post('assignedfor'));
+                $this->session->set_flashdata('errors', validation_errors());
+
+            } else {
+                
+                $query = array(
+                    'topic' => $this->input->post('topic'),
+                    'assignedfor' => $this->input->post('assignedfor'),
+                    'createdby' => 'adm'
+                );
+
+                if ( $_FILES['filetugas']['name'] != "" ) {
+                    $config['upload_path'] = './uploads/homeworks/';
+                    $config['allowed_types'] = 'doc|docx|pdf|xls|xlsx';
+                    
+                    $this->upload->initialize($config);
+                    
+                    if ( $this->upload->do_upload('filetugas')){
+
+                        $data = $this->upload->data();
+                        $query['homework'] = $data['file_name'];
+                    }
+                    else{
+                        $this->session->set_flashdata('topic', $this->input->post('topic'));
+                        $this->session->set_flashdata('assignedfor', $this->input->post('assignedfor'));
+                        $this->session->set_flashdata('errors', $this->upload->display_errors());
+                    }
+                }
+
+                $this->db->trans_begin();
+
+                $this->load->model('admin_model');
+                $this->admin_model->create_new_assignment( $query );
+
+                $this->db->trans_commit();
+
+                $this->session->set_flashdata('success', 'Successfully create new assignment.');
+
+            }
+
+            redirect('/admin/createassignment','refresh');
+
+        } else {
+            redirect('/','refresh');
+        }
+    }
 
 }
 

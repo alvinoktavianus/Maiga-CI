@@ -68,8 +68,7 @@
                             <th>Keterangan</th>
                             <th>Tanggal Upload</th>
                             <th>Tanggal Periksa</th>
-                            <th>Status</th>
-                            <th></th>
+                            <th colspan="2">Status</th>
                         </tr>
                         </thead>
                         <tbody>

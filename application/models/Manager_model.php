@@ -3,8 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Manager_model extends CI_Model {
 
+    public function find_by_email($email)
+    {
+        $this->db->select('nama, tempatlahir, tanggallahir, mobile, jabatan, department, mulaibekerja, namabank, norekening');
+        $this->db->where('email', $email);
+        return $this->db->get('employees')->result()[0];
+    }
+
     public function get_all_homework()
     {
+        $this->db->where('createdby', 'mgr');
         return $this->db->get('homeworks')->result();
     }
 
@@ -15,6 +23,7 @@ class Manager_model extends CI_Model {
 
     public function get_all_topics()
     {
+        $this->db->where('createdby', 'mgr');
         $results = $this->db->get('homeworks')->result();
         $topics[''] = '';
         foreach($results as $result) $topics[$result->topic] = $result->topic;
@@ -27,6 +36,7 @@ class Manager_model extends CI_Model {
         $this->db->from('assignments');
         $this->db->join('employees', 'employees.email = assignments.email', 'left');
         $this->db->where('assignments.topic', $topic);
+        $this->db->where('assignments.uploadedby', 'emp');
         $this->db->order_by('assignments.updatedttm', 'desc');
         return $this->db->get()->result();
     }

@@ -6,8 +6,10 @@ class Manager extends CI_Controller {
     public function index()
     {
         if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' ) {
-            $data['page_title'] = "Manager | Treezia";
+            $this->load->model('manager_model');
+            $data['page_title'] = "Manager | Maiga";
             $data['page'] = 'homeview';
+            $data['profile'] = $this->manager_model->find_by_email($this->session->userdata('user_session')['email']);
             $this->load->view('include/masterlogin', $data);
         } else {
             redirect('/','refresh');
@@ -18,7 +20,7 @@ class Manager extends CI_Controller {
     {
         if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' ) {
             $this->load->model('manager_model');
-            $data['page_title'] = "Check Assignment | Treezia";
+            $data['page_title'] = "Check Assignment | Maiga";
             $data['page'] = 'checkassignmentview';
             $data['topics'] = $this->manager_model->get_all_topics();
             $data['csrf'] = array(
@@ -35,7 +37,7 @@ class Manager extends CI_Controller {
     {
         if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' && $this->input->get('topic') != null ) {
             $this->load->model('manager_model');
-            $data['page_title'] = "Check Assignment by topic : ".$this->input->get('topic')." | Treezia";
+            $data['page_title'] = "Check Assignment by topic : ".$this->input->get('topic')." | Maiga";
             $data['topic'] = $this->input->get('topic');
             $data['topics'] = $this->manager_model->get_all_topics();
             $data['page'] = 'checkassignmentsview';
@@ -50,7 +52,7 @@ class Manager extends CI_Controller {
     {
         if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' ) {
             $this->load->model('manager_model');
-            $data['page_title'] = "Create Assignment | Treezia";
+            $data['page_title'] = "Create Assignment | Maiga";
             $data['page'] = 'createassignmentview';
             $data['homeworks'] = $this->manager_model->get_all_homework();
             $this->load->view('include/masterlogin', $data);
@@ -72,34 +74,34 @@ class Manager extends CI_Controller {
 
             } else {
                 
-                $config['upload_path'] = './uploads/homeworks/';
-                $config['allowed_types'] = 'doc|docx|pdf|xls|xlsx';
-                
-                $this->upload->initialize($config);
-                
-                if ( $this->upload->do_upload('filetugas')){
+                $query = array(
+                    'topic' => $this->input->post('topic'),
+                    'assignedfor' => 'emp',
+                    'createdby' => 'mgr'
+                );
 
-                    $data = $this->upload->data();
-
-                    $query = array(
-                        'topic' => $this->input->post('topic'),
-                        'homework' => $data['file_name']
-                    );
-
-                    $this->db->trans_begin();
-
-                    $this->load->model('manager_model');
-                    $this->manager_model->create_new_assignment( $query );
-
-                    $this->db->trans_commit();
-
-                    $this->session->set_flashdata('success', 'Successfully create new assignment.');
-
+                if ( $_FILES['filetugas']['name'] != "" ) {
+                    $config['upload_path'] = './uploads/homeworks/';
+                    $config['allowed_types'] = 'doc|docx|pdf|xls|xlsx';
+                    
+                    $this->upload->initialize($config);
+                    
+                    if ( $this->upload->do_upload('filetugas')){
+                        $data = $this->upload->data();
+                        $query['homework'] = $data['file_name'];
+                    }
+                    else{
+                        $this->session->set_flashdata('topic', $this->input->post('topic'));
+                        $this->session->set_flashdata('errors', $this->upload->display_errors());
+                    }
                 }
-                else{
-                    $this->session->set_flashdata('topic', $this->input->post('topic'));
-                    $this->session->set_flashdata('errors', $this->upload->display_errors());
-                }
+
+                $this->db->trans_begin();
+
+                $this->load->model('manager_model');
+                $this->manager_model->create_new_assignment( $query );
+
+                $this->db->trans_commit();
 
             }
 

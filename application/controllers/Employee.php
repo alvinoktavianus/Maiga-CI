@@ -6,8 +6,10 @@ class Employee extends CI_Controller {
 	public function index()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
-			$data['page_title'] = "Employee ".$this->session->userdata('user_session')['email']." | Treezia";
+			$this->load->model('employee_model');
+			$data['page_title'] = "Employee ".$this->session->userdata('user_session')['email']." | Maiga";
 			$data['page'] = 'homeview';
+			$data['profile'] = $this->employee_model->find_by_email($this->session->userdata('user_session')['email']);
 			$this->load->view('include/masterlogin', $data);
 		} else {
 			redirect('/','refresh');
@@ -129,7 +131,8 @@ class Employee extends CI_Controller {
 					$query = array(
 						'email' => $this->session->userdata('user_session')['email'],
 						'assignment' => $data['file_name'],
-						'description' => $this->input->post('description')
+						'description' => $this->input->post('description'),
+						'uploadedby' => 'emp'
 					);
 
 					$this->db->trans_begin();
@@ -150,19 +153,6 @@ class Employee extends CI_Controller {
 
 			}
 
-		} else {
-			redirect('/','refresh');
-		}
-	}
-
-	public function updateprofile()
-	{
-		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp') {
-			$this->load->model('employee_model');
-			$data['page_title'] = "Update Profile | Maiga";
-			$data['employee'] = $this->employee_model->find_detail_by_email($this->session->userdata('user_session')['email']);
-			$data['page'] = "updateprofileview";
-			$this->load->view('include/masterlogin', $data);
 		} else {
 			redirect('/','refresh');
 		}
