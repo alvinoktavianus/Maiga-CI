@@ -157,6 +157,18 @@
                 $( "input.datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' })
             });
         </script>
+        <?php
+            if ($this->session->userdata('user_session')['isloggedin']) {
+                
+                switch ($this->session->userdata('user_session')['role']) {
+                    case 'adm': {
+                        echo "<script src='". base_url() . 'assets/js/app-admin.js' ."'"."></script>";
+                        break;
+                    }
+                }
+
+            }
+        ?>
     </body>
 
 </html>
