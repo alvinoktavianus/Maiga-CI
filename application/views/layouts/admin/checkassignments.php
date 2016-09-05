@@ -83,7 +83,7 @@
                                         ?>
                                     </td>
                                 <?php else: ?>
-                                    <td>                                    
+                                    <td colspan="3">                                    
                                         <?php if( $assignment->status == 'A' ): ?>
                                             <p class="text-success">Approved</p>
                                         <?php elseif( $assignment->status == 'C' ): ?>
