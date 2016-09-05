@@ -54,72 +54,45 @@
                                 <td><a target="_blank" href="<?php echo base_url(); ?>admin/downloadassignment?filename=<?php echo $assignment->assignment; ?>"><?php echo $assignment->assignment; ?></a></td>
                                 <td><?php echo date("D, d M Y | H:i", strtotime($assignment->createdttm)); ?></td>
                                 <td><?php if ( $assignment->updatedttm != null ) echo date("D, d M Y | H:i", strtotime($assignment->updatedttm)); ?></td>
-                                <td>
-                                    <?php 
-                                        if ( $assignment->status == 'P' ) {
-                                            echo form_open(base_url().'admin/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=A&topic='.$this->input->get('topic'));
-                                            echo form_submit('', 'Approve', array( 'class' => 'btn btn-success btn-xs' ));
-                                            echo form_close();
-                                        }
-                                        else {
-                                            switch ($assignment->status) {
-                                                case 'A':
-                                                    echo 'Approved';
-                                                    break;
-                                                case 'C':
-                                                    echo 'Canceled';
-                                                    break;
-                                                case 'R':
-                                                    echo 'Need Revision';
-                                                    break;
+                                <?php if ($assignment->status == 'P'): ?>
+                                    <td>
+                                        <?php 
+                                            if ( $assignment->status == 'P' ) {
+                                                echo form_open(base_url().'admin/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=A&topic='.$this->input->get('topic'));
+                                                echo form_submit('', 'Approve', array( 'class' => 'btn btn-success btn-xs' ));
+                                                echo form_close();
                                             }
-                                        }
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php 
-                                        if ( $assignment->status == 'P' ) {
-                                            echo form_open(base_url().'admin/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=R&topic='.$this->input->get('topic'));
-                                            echo form_submit('', 'Need Revision', array( 'class' => 'btn btn-warning btn-xs' ));
-                                            echo form_close();
-                                        }
-                                        else {
-                                            switch ($assignment->status) {
-                                                case 'A':
-                                                    echo 'Approved';
-                                                    break;
-                                                case 'C':
-                                                    echo 'Canceled';
-                                                    break;
-                                                case 'R':
-                                                    echo 'Need Revision';
-                                                    break;
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php 
+                                            if ( $assignment->status == 'P' ) {
+                                                echo form_open(base_url().'admin/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=R&topic='.$this->input->get('topic'));
+                                                echo form_submit('', 'Need Revision', array( 'class' => 'btn btn-warning btn-xs' ));
+                                                echo form_close();
                                             }
-                                        }
-                                    ?>                    
-                                </td>
-                                <td>
-                                    <?php 
-                                        if ( $assignment->status == 'P' ) {
-                                            echo form_open(base_url().'admin/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=C&topic='.$this->input->get('topic'));
-                                            echo form_submit('', 'Cancel', array( 'class' => 'btn btn-danger btn-xs' ));
-                                            echo form_close();
-                                        }
-                                        else {
-                                            switch ($assignment->status) {
-                                                case 'A':
-                                                    echo 'Approved';
-                                                    break;
-                                                case 'C':
-                                                    echo 'Canceled';
-                                                    break;
-                                                case 'R':
-                                                    echo 'Need Revision';
-                                                    break;
+                                        ?>                    
+                                    </td>
+                                    <td>
+                                        <?php 
+                                            if ( $assignment->status == 'P' ) {
+                                                echo form_open(base_url().'admin/updateassignmentstatus?email='.$assignment->email.'&filename='.$assignment->assignment.'&status=C&topic='.$this->input->get('topic'));
+                                                echo form_submit('', 'Cancel', array( 'class' => 'btn btn-danger btn-xs' ));
+                                                echo form_close();
                                             }
-                                        }
-                                    ?>
-                                </td>
+                                        ?>
+                                    </td>
+                                <?php else: ?>
+                                    <td>                                    
+                                        <?php if( $assignment->status == 'A' ): ?>
+                                            <p class="text-success">Approved</p>
+                                        <?php elseif( $assignment->status == 'C' ): ?>
+                                            <p class="text-danger">Canceled</p>
+                                        <?php elseif( $assignment->status == 'R' ): ?>
+                                            <p class="text-warning">Need Revision</p>
+                                        <?php endif; ?>
+                                    </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
