@@ -14,6 +14,9 @@
             <li class="<?php if ($page == 'checkassignmentview' || $page == 'checkassignmentsview') { echo "active"; } ?>">
                 <a href="<?php echo base_url(); ?>manager/checkassignment"> <i class="fa fa-check-square-o" aria-hidden="true"></i> Check Assignment</a>
             </li>
+            <li class="<?php if ($page == 'downloadpayrollview') { echo "active"; } ?>">
+                <a href="<?php echo base_url(); ?>manager/downloadpayroll"> <i class="fa fa-inbox" aria-hidden="true"></i> Download Payroll </a>
+            </li>
         </ul>
     </nav>
 </div>

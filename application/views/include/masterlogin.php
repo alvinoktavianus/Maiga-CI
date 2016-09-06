@@ -110,6 +110,9 @@
                         case 'editprofileview':
                             $this->load->view('include/editprofile');
                             break;
+                        case 'downloadpayrollview':
+                            $this->load->view('layouts/manager/downloadpayroll');
+                            break;
                     }
                     break;
                 case 'emp':

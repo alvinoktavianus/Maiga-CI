@@ -152,6 +152,29 @@ class Manager extends CI_Controller {
         }
     }
 
+    public function downloadpayroll()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' ) {
+            $this->load->model('manager_model');
+            $data['payrolls'] = $this->manager_model->get_all_payroll($this->session->userdata('user_session')['email']);
+            $data['page_title'] = "Download Payroll | Maiga";
+            $data['page'] = 'downloadpayrollview';
+            $this->load->view('include/masterlogin', $data);
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
+    public function getpayroll()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'mgr' && $this->input->get('filename') != null ) {
+            $path = "./uploads/payrolls/".$this->input->get('filename');
+            force_download($path, NULL);
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
 }
 
 /* End of file Manager.php */
