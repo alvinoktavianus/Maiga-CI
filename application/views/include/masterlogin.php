@@ -91,6 +91,9 @@
                         case 'editprofileview':
                             $this->load->view('include/editprofile');
                             break;
+                        case 'assignmenthistoryview':
+                            $this->load->view('layouts/admin/assignmenthistory');
+                            break;
                     }
                     break;
                 case 'mgr':

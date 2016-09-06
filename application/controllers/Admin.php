@@ -382,6 +382,21 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function assignmenthistory()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+
+            $this->load->model('admin_model');
+            $data['assignments'] = $this->admin_model->get_all_history();
+            $data['page_title'] = "Assignment's History | Maiga";
+            $data['page'] = "assignmenthistoryview";
+            $this->load->view('include/masterlogin', $data);
+
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
 }
 
 /* End of file Admin.php */
