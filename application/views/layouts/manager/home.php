@@ -20,7 +20,13 @@
                 <div class="col-sm-4">
                     <div class="row">
                         <div class="col-xs-12"> <?php $profilepic = base_url().'uploads/profilepics/'.$this->session->userdata('user_session')['profilepic'];  ?>
-                            <img style="max-width: 100%; display: block; height: 225px; margin: 0 auto;" src="<?php echo $profilepic; ?>" alt="<?php echo $this->session->userdata('user_session')['profilepic']; ?>">
+                            <?php 
+                                if ( $this->session->userdata('user_session')['profilepic'] != null ) {
+                                    $profilepic = base_url().'uploads/profilepics/'.$this->session->userdata('user_session')['profilepic'];
+                                } else {
+                                    $profilepic = 'http://placehold.it/300x300';
+                                }
+                            ?> <img style="max-width: 100%; display: block; height: 225px; margin: 0 auto;" src="<?php echo $profilepic; ?>" alt="<?php echo $this->session->userdata('user_session')['profilepic']; ?>">
                         </div>
                     </div>
                     <br>
