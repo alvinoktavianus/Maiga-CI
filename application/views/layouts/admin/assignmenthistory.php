@@ -18,6 +18,7 @@
                         <thead class="thead-inverse">
                             <th>Email</th>
                             <th>Topik</th>
+                            <th>Deskripsi</th>
                             <th>File Tugas</th>
                             <th>Tanggal Upload</th>
                         </thead>
@@ -26,6 +27,7 @@
                                 <tr>
                                     <td><?php echo $assignment->email ?></td>
                                     <td><?php echo $assignment->topic ?></td>
+                                    <td><?php echo nl2br($assignment->description) ?></td>
                                     <td>
                                         <a href="<?php echo base_url() ?>admin/downloadassignment/?filename=<?php echo $assignment->assignment ?>" target="_blank"><?php echo $assignment->assignment ?></a>
                                     </td>

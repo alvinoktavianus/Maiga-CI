@@ -92,10 +92,18 @@ class Employee extends CI_Controller {
 					'updatedttm' => date('Y-m-d H:i:s', now('Asia/Jakarta'))
 				);
 
+				$query2 = array(
+	                'email' => $this->session->userdata('user_session')['email'],
+	                'topic' => $this->input->get('topic'),
+	                'assignment' => $data['file_name'],
+	                'description' => $this->input->post('description')
+				);
+
 				$this->db->trans_begin();
 
 				$this->load->model('employee_model');
 				$this->employee_model->update_assignment( $email, $topic, $filename, $query );
+				$this->employee_model->insert_to_history( $query2 );
 
 				$this->db->trans_commit();
 
@@ -112,6 +120,7 @@ class Employee extends CI_Controller {
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'emp' ) {
 
+			$this->form_validation->set_rules('topic', 'Topik', 'trim|required');
 			$this->form_validation->set_rules('description', 'Description', 'trim|required');
 
 			if ($this->form_validation->run() == false) {
@@ -130,15 +139,24 @@ class Employee extends CI_Controller {
 
 					$query = array(
 						'email' => $this->session->userdata('user_session')['email'],
+						'topic' => $this->input->post('topic'),
 						'assignment' => $data['file_name'],
 						'description' => $this->input->post('description'),
 						'uploadedby' => 'emp'
+					);
+
+					$query2 = array(
+		                'email' => $this->session->userdata('user_session')['email'],
+		                'topic' => $this->input->post('topic'),
+		                'assignment' => $data['file_name'],
+		                'description' => $this->input->post('description')
 					);
 
 					$this->db->trans_begin();
 
 					$this->load->model('employee_model');
 					$this->employee_model->insert_assignment_by_email( $this->session->userdata('user_session')['email'], $query );
+					$this->employee_model->insert_to_history( $query2 );
 
 					$this->db->trans_commit();
 
