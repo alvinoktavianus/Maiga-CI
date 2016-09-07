@@ -27,7 +27,7 @@
                                     <td><?php echo $assignment->email ?></td>
                                     <td><?php echo $assignment->topic ?></td>
                                     <td>
-                                        <a href="<?php echo base_url() ?>admin/downloadassignment/<?php echo $assignment->assignment ?>" target="_blank"><?php echo $assignment->assignment ?></a>
+                                        <a href="<?php echo base_url() ?>admin/downloadassignment/?filename=<?php echo $assignment->assignment ?>" target="_blank"><?php echo $assignment->assignment ?></a>
                                     </td>
                                     <td><?php echo $assignment->createdttm ?></td>
                                 </tr>
