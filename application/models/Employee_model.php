@@ -65,6 +65,11 @@ class Employee_model extends CI_Model {
         $this->db->update('assignments', $data);
     }
 
+    public function insert_to_history($query)
+    {
+        $this->db->insert('histories', $query);
+    }
+
 }
 
 /* End of file Employee_model.php */

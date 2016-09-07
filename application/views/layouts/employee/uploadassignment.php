@@ -97,6 +97,7 @@
                                             $topic = $assignment->topic;
                                             $url = base_url().'employee/do_upload_revision?topic='.$topic.'&filename='.$filename;
                                             echo form_open_multipart($url);
+                                            echo form_hidden('description', $assignment->description);
                                             echo form_input(array( 'type' => 'file', 'id' => 'revision', 'name' => 'revision', 'accept' => '.doc, .docx', 'required' => true, 'class' => 'form-control' )); ?>
 
                                                 <p style="text-align: center; margin-top: 4px;">
