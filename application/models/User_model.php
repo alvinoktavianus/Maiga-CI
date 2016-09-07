@@ -15,6 +15,20 @@ class User_model extends CI_Model {
         $this->db->update('employees', $data);
     }
 
+    public function get_all_assignments()
+    {
+        $this->db->select('email, topic, assignment, description, createdttm');
+        $this->db->from('assignments');
+        return $this->db->get()->result();
+    }
+
+    public function migrate_data($query)
+    {
+        $this->db->trans_begin();
+        $this->db->insert('histories', $query);
+        $this->db->trans_commit();
+    }
+
 }
 
 /* End of file User_model.php */

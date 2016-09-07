@@ -94,6 +94,9 @@
                         case 'assignmenthistoryview':
                             $this->load->view('layouts/admin/assignmenthistory');
                             break;
+                        case 'maintenanceview':
+                            $this->load->view('layouts/admin/maintenance');
+                            break;
                     }
                     break;
                 case 'mgr':

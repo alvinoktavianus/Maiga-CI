@@ -1,6 +1,6 @@
 <article class="content responsive-tables-page">
     <div class="title-block">
-        <h1 class="title">Download Payroll</h1>
+        <h1 class="title">Assignment History</h1>
         <p class="title-description"> Maiga Corp. </p>
     </div>
     <section class="section">
@@ -36,6 +36,8 @@
                     </table>
                 </div>      
 
+            <?php else: ?>
+                <h4>No assignment history.</h4>
             <?php endif; ?>
 
         </div>
