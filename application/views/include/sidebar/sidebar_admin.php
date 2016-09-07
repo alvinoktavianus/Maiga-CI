@@ -25,8 +25,14 @@
             <li class="<?php if ($page == 'checkassignmentview' || $page == 'checkassignmentsview') { echo "active"; } ?>">
                 <a href="<?php echo base_url(); ?>admin/checkassignment"> <i class="fa fa-inbox" aria-hidden="true"></i> Check Assignment </a>
             </li>
+            <li class="<?php if ($page == 'assignmenthistoryview') { echo "active"; } ?>">
+                <a href="<?php echo base_url(); ?>admin/assignmenthistory"> <i class="fa fa-inbox" aria-hidden="true"></i> Assignment History </a>
+            </li>
             <li class="<?php if ($page == 'uploadpayrollview') { echo "active"; } ?>">
                 <a href="<?php echo base_url(); ?>admin/uploadpayroll"> <i class="fa fa-check-square-o" aria-hidden="true"></i> Upload payroll</a>
+            </li>
+            <li class="<?php if ($page == 'maintenanceview') { echo "active"; } ?>">
+                <a href="<?php echo base_url(); ?>admin/maintenance"> <i class="fa fa-check-square-o" aria-hidden="true"></i> Maintenance</a>
             </li>
         </ul>
     </nav>

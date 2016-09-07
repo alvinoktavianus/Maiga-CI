@@ -102,6 +102,11 @@ class Admin_model extends CI_Model {
         return $this->db->get('homeworks')->result();
     }
 
+    public function get_all_history()
+    {
+        return $this->db->get('histories')->result();
+    }
+
 }
 
 /* End of file Admin_model.php */

@@ -228,6 +228,36 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function maintenance()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+            $data['page_title'] = "Maintenance | Maiga";
+            $data['page'] = "maintenanceview";
+            $this->load->view('include/masterlogin', $data);
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
+    public function runmigration()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' && $this->input->get('action') != null ) {
+
+            switch ($this->input->get('action')) {
+                case 'migratehistories':
+                    $this->load->library('migration_script');
+                    $this->migration_script->migrate_history();
+                    break;
+                default:
+                    redirect('/admin','refresh');
+                    break;
+            }
+
+        } else {
+
+        }
+    }
+
 	public function getassignment()
 	{
 		if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' && $this->input->get('filename') != null ) {
@@ -376,6 +406,21 @@ class Admin extends CI_Controller {
             }
 
             redirect('/admin/createassignment','refresh');
+
+        } else {
+            redirect('/','refresh');
+        }
+    }
+
+    public function assignmenthistory()
+    {
+        if ( $this->session->has_userdata('user_session') && $this->session->userdata('user_session')['role'] == 'adm' ) {
+
+            $this->load->model('admin_model');
+            $data['assignments'] = $this->admin_model->get_all_history();
+            $data['page_title'] = "Assignment's History | Maiga";
+            $data['page'] = "assignmenthistoryview";
+            $this->load->view('include/masterlogin', $data);
 
         } else {
             redirect('/','refresh');

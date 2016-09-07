@@ -48,6 +48,12 @@ class Manager_model extends CI_Model {
         $this->db->update('assignments', $data);
     }
 
+    public function get_all_payroll($email)
+    {
+        $this->db->where('email', $email);
+        return $this->db->get('payrolls')->result();
+    }
+
 }
 
 /* End of file Manager_model.php */

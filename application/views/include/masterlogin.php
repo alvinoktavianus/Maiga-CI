@@ -91,6 +91,12 @@
                         case 'editprofileview':
                             $this->load->view('include/editprofile');
                             break;
+                        case 'assignmenthistoryview':
+                            $this->load->view('layouts/admin/assignmenthistory');
+                            break;
+                        case 'maintenanceview':
+                            $this->load->view('layouts/admin/maintenance');
+                            break;
                     }
                     break;
                 case 'mgr':
@@ -109,6 +115,9 @@
                             break;
                         case 'editprofileview':
                             $this->load->view('include/editprofile');
+                            break;
+                        case 'downloadpayrollview':
+                            $this->load->view('layouts/manager/downloadpayroll');
                             break;
                     }
                     break;
@@ -157,6 +166,18 @@
                 $( "input.datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' })
             });
         </script>
+        <?php
+            if ($this->session->userdata('user_session')['isloggedin']) {
+                
+                switch ($this->session->userdata('user_session')['role']) {
+                    case 'adm': {
+                        echo "<script src='". base_url() . 'assets/js/app-admin.js' ."'"."></script>";
+                        break;
+                    }
+                }
+
+            }
+        ?>
     </body>
 
 </html>
