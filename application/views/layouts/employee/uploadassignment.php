@@ -79,47 +79,37 @@
                                 <td><?php echo nl2br($assignment->description); ?></td>
                                 <td><?php echo date("D, d M Y | H:i", strtotime($assignment->createdttm)); ?></td>
                                 <td><?php if ($assignment->checkedon != null) echo date("D, d M Y | H:i", strtotime($assignment->checkedon)); ?></td>
-                                <td>
-                                    <?php if ( $assignment->status == 'P' ): ?>
-                                        <p class="text-info">Pending</p>
-                                    <?php elseif( $assignment->status == 'A' ): ?>
-                                        <p class="text-success">Approved</p>
-                                    <?php elseif( $assignment->status == 'C' ): ?>
-                                        <p class="text-danger">Canceled</p>
-                                    <?php elseif( $assignment->status == 'R' ): ?>
-                                        <p class="text-warning">Need Revision</p>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <?php
-                                        if ( $assignment->status == 'C' || $assignment->status == 'R' ) {
+                                <?php if ( $assignment->status == 'R' ): ?>
+                                    <td><p class="text-warning">Need Revision</p></td>
+                                    <td>
+                                        <?php
                                             $filename = $assignment->assignment;
                                             $topic = $assignment->topic;
                                             $url = base_url().'employee/do_upload_revision?topic='.$topic.'&filename='.$filename;
                                             echo form_open_multipart($url);
                                             echo form_hidden('description', $assignment->description);
-                                            echo form_input(array( 'type' => 'file', 'id' => 'revision', 'name' => 'revision', 'accept' => '.doc, .docx', 'required' => true, 'class' => 'form-control' )); ?>
+                                            echo form_input(array( 'type' => 'file', 'id' => 'revision', 'name' => 'revision', 'accept' => '.doc, .docx', 'required' => true, 'class' => 'form-control' ));
+                                        ?>
 
-                                                <p style="text-align: center; margin-top: 4px;">
-                                                <?php echo form_submit('', 'Upload Revisi', array('class' => 'btn btn-warning btn-xs')); ?>
-                                                </p>
+                                        <p style="text-align: center; margin-top: 4px;">
+                                        <?php echo form_submit('', 'Upload Revisi', array('class' => 'btn btn-warning btn-xs')); ?>
+                                        </p>
 
-                                            <?php echo form_close();
-                                        } else {
-                                            switch ($assignment->status) {
-                                                case 'P':
-                                                    echo "Pending";
-                                                    break;
-                                                case 'A':
-                                                    echo "Approved";
-                                                    break;
-                                                case 'R':
-                                                    echo "Need Revision";
-                                                    break;
-                                            }
-                                        }
-                                    ?>
-                                </td>
+                                        <?php echo form_close(); ?>
+                                    </td>
+                                <?php else: ?>
+                                    <td colspan="2">
+                                        <?php if ( $assignment->status == 'P' ): ?>
+                                            <p class="text-info">Pending</p>
+                                        <?php elseif( $assignment->status == 'A' ): ?>
+                                            <p class="text-success">Approved</p>
+                                        <?php elseif( $assignment->status == 'C' ): ?>
+                                            <p class="text-danger">Canceled</p>
+                                        <?php elseif( $assignment->status == 'R' ): ?>
+                                            <p class="text-warning">Need Revision</p>
+                                        <?php endif; ?>                                        
+                                    </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
