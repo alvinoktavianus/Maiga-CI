@@ -119,6 +119,9 @@
                         case 'downloadpayrollview':
                             $this->load->view('layouts/manager/downloadpayroll');
                             break;
+                        case 'uploadassignmentview':
+                            $this->load->view('layouts/manager/uploadassignment');
+                            break;
                     }
                     break;
                 case 'emp':

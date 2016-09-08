@@ -50,6 +50,7 @@ class Employee_model extends CI_Model {
 
     public function get_topic()
     {
+        $this->db->where('assignedfor', 'emp');
         $this->db->select('topic');
         $results = $this->db->get('homeworks')->result();
         $topic[''] = '';

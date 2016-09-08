@@ -54,6 +54,39 @@ class Manager_model extends CI_Model {
         return $this->db->get('payrolls')->result();
     }
 
+    public function get_topics()
+    {
+        $this->db->where('assignedfor', 'mgr');
+        $this->db->select('topic');
+        $results = $this->db->get('homeworks')->result();
+        $topic[''] = '';
+        foreach ($results as $result) $topic[$result->topic] = $result->topic;
+        return $topic;
+    }
+
+    public function get_all_assignment($email)
+    {
+        $this->db->select('assignments.assignment, assignments.createdttm, assignments.description, assignments.status, assignments.checkedon, assignments.topic');
+        $this->db->from('assignments');
+        $this->db->join('employees', 'employees.email = assignments.email');
+        $this->db->where('employees.role', 'mgr');
+        $this->db->where('employees.status', 'Aktif');
+        $this->db->where('employees.email', $email);
+        $this->db->order_by('assignments.createdttm', 'desc');
+        return $this->db->get()->result();
+    }
+
+    public function insert_to_history($query)
+    {
+        $this->db->insert('histories', $query);
+    }
+
+    public function insert_assignment_by_email($email, $data)
+    {
+        $this->db->where('email', $email);
+        $this->db->insert('assignments', $data);
+    }
+
 }
 
 /* End of file Manager_model.php */
